@@ -53,14 +53,14 @@ module.exports = function( pw ){
 		return res.send('kill-port ' + port);
 	});
 
-	router.get('/kill-process/:pid', function( req, res ){
+	router.get('/kill/:pid', function( req, res ){
 		// import exec method from child_process module
 		const pid = req.params.pid >> 0;
 		exec("kill -9 " + pid); // -15
 		return res.send('process killed');
 	});
 
-	router.get('/kill-process-and-restart/:pid', function( req, res ){
+	router.get('/kill-and-restart/:pid', function( req, res ){
 		// import exec method from child_process module
 		const pid = req.params.pid >> 0;
 		exec("kill -9 " + pid + " && node index.js"); // -15
