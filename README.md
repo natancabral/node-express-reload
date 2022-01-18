@@ -25,10 +25,9 @@ const app = express();
 const PORT = 8080;
 
 const NER_PASSWORD = '&HSNKQ!Ç';
-const ner = require("node-express-reload")(NER_PASSWORD);
 // ** Secure Change **
 // ** change name /ner to /any-another-word **
-app.use('/ner', ner);
+app.use('/ner', require("node-express-reload")(NER_PASSWORD));
 
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
