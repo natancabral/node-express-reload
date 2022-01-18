@@ -14,7 +14,7 @@ module.exports = function( pw ){
   <script type="text/javascript">
   var password = window.prompt("Enter in the password");
   if(password === '${pw}')
-    document.write('${GET_PID}');
+    document.write('👍 ${GET_PID}');
   else 
     document.write('👎');
   </script>

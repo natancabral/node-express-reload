@@ -39,11 +39,25 @@ app.listen(PORT);
 I'm pid 849113 and port 8080
 ```
 
+## init secure password
+
+```shell
+$ http://localhost:8080/ner/secure/
+# enter your passoword
+```
+
+## install npm package
+
+PID is a number
+```shell
+$ http://localhost:8080/ner/npm/i/PID/pdfkit-table,cors
+```
+
 ## request kill and restart PID
 
 PID is a number
 ```shell
-$ curl http://localhost:8080/ner/kill-and-restart-process/PID
+$ http://localhost:8080/ner/kill-and-restart/PID
 ```
 
 ## output
