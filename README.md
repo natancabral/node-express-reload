@@ -26,10 +26,10 @@ const PORT = 8080;
 
 const NER_PASSWORD = '&HSNKQ!Ç';
 const ner = require("node-express-reload")(NER_PASSWORD);
-
 // ** Secure Change **
 // ** change name /ner to /any-another-word **
 app.use('/ner', ner);
+
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
@@ -54,6 +54,18 @@ reload requested 👍
 ...
 reload complete ✅
 ```
+
+| router | action | value | example |
+|--------| -------| ------| --------|
+| /secure | | | |
+| /kill-port/:port | | | |
+| /kill-port-and-restart/:port | | | |
+| /kill-process/:pid | | | |
+| /kill-process-and-restart/:pid | | | |
+| /list-of-process | | | |
+| /list-all-processes | | | |
+| /npm/:type/:pid/:packages | | | |
+| /npm/fix/:pid | | | |
 
 ## License
 
