@@ -58,11 +58,12 @@ reload complete ✅
 |--------| -------| ------| --------|
 | /**ner**/secure | You need set permission to enter | your password | ... |
 | /**ner**/kill-process/:pid | kill process | PID | http://localhost:8080/ner/kill-process/849113 |
-| /**ner**/kill-process-and-restart/:pid | kill process and restart | PID | ... |
-| /**ner**/list-of-process | list | none | ... |
-| /**ner**/list-all-processes | big list | none | ... |
-| /**ner**/npm/:type/:pid/:packages | Install and uninstall packages | type: i or u, pid: PID, packages: pdfkit-table,cors,... | |
-| /**ner**/npm/fix/:pid | npm fix | PID | ... |
+| /**ner**/kill-process-and-restart/:pid | kill process and restart | PID | http://localhost:8080/ner/process-and-restart/849113 |
+| d asdsa dasd asd asdad            |
+| /**ner**/list-of-process | list | none | http://localhost:8080/ner/list-of-process/849113 |
+| /**ner**/list-all-processes | big list | none | http://localhost:8080/ner/list-all-processes/849113 |
+| /**ner**/npm/:type/:pid/:packages | Install and uninstall packages | type: i or u, pid: PID, packages: pdfkit-table,cors,... | http://localhost:8080/ner/npm/i/849113/pdfkit-table,cors |
+| /**ner**/npm/fix/:pid | npm fix | PID | http://localhost:8080/ner/npm/fix/849113 |
 
 ## License
 
