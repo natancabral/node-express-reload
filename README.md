@@ -56,13 +56,13 @@ reload complete ✅
 
 | router | action | value | example |
 |--------| -------| ------| --------|
-| /**ner**/secure | | | |
-| /**ner**/kill-process/:pid | | | |
-| /**ner**/kill-process-and-restart/:pid | | | |
-| /**ner**/list-of-process | | | |
-| /**ner**/list-all-processes | | | |
-| /**ner**/npm/:type/:pid/:packages | | | |
-| /**ner**/npm/fix/:pid | | | |
+| /**ner**/secure | You need set permission to enter | your password | ... |
+| /**ner**/kill-process/:pid | kill process | PID | http://localhost:8080/ner/kill-process/849113 |
+| /**ner**/kill-process-and-restart/:pid | kill process and restart | PID | ... |
+| /**ner**/list-of-process | list | none | ... |
+| /**ner**/list-all-processes | big list | none | ... |
+| /**ner**/npm/:type/:pid/:packages | Install and uninstall packages | type: i or u, pid: PID, packages: pdfkit-table,cors,... | |
+| /**ner**/npm/fix/:pid | npm fix | PID | ... |
 
 ## License
 

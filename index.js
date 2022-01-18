@@ -16,7 +16,7 @@ module.exports = function( pw ){
   if(password === '${pw}')
     document.write('${GET_PID}');
   else 
-    document.write('Ops!');
+    document.write('👎');
   </script>
   `;
   const SECURE_MESSAGE = `Change your password. 
