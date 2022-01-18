@@ -27,8 +27,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.74275193"
-     inkscape:cx="393.80578"
-     inkscape:cy="582.29401"
+     inkscape:cx="342.64468"
+     inkscape:cy="580.94767"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -59,7 +59,10 @@
     <g
        style="fill:none;stroke:#373746;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="g10953"
-       transform="matrix(1.9087337,0,0,1.9087337,14.871354,109.45947)">
+       transform="matrix(1.9087337,0,0,1.9087337,14.871354,109.45947)"
+       inkscape:export-filename="/mnt/FILES/development/git/node-express-reload/images/logo.png"
+       inkscape:export-xdpi="88.603836"
+       inkscape:export-ydpi="88.603836">
       <polyline
          points="23 4 23 10 17 10"
          id="polyline10938"
@@ -78,7 +81,10 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1802px;line-height:0.95;font-family:serif;-inkscape-font-specification:serif;letter-spacing:-0.00709015px;word-spacing:-0.00709015px;fill:#6f7c91;fill-opacity:1;stroke:none;stroke-width:0.354506"
        x="69.645645"
        y="123.20055"
-       id="text12"><tspan
+       id="text12"
+       inkscape:export-filename="/mnt/FILES/development/git/node-express-reload/images/logo.png"
+       inkscape:export-xdpi="88.603836"
+       inkscape:export-ydpi="88.603836"><tspan
          sodipodi:role="line"
          id="tspan10"
          x="69.645645"
@@ -92,13 +98,16 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.51005px;line-height:1.25;font-family:sans-serif;opacity:0.53;fill:#1c1f24;fill-opacity:1;stroke:none;stroke-width:0.0877514"
-       x="167.39766"
-       y="134.72752"
-       id="text540"><tspan
+       x="178.64825"
+       y="123.55394"
+       id="text540"
+       inkscape:export-filename="/mnt/FILES/development/git/node-express-reload/images/logo.png"
+       inkscape:export-xdpi="88.603836"
+       inkscape:export-ydpi="88.603836"><tspan
          sodipodi:role="line"
          id="tspan538"
-         x="167.39766"
-         y="134.72752"
+         x="178.64825"
+         y="123.55394"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:serif;-inkscape-font-specification:serif;fill:#1c1f24;stroke:none;stroke-width:0.0877514">NC</tspan></text>
     <rect
        x="26.662922"
@@ -108,34 +117,49 @@
        rx="2.1743343"
        ry="2.1743343"
        id="rect9899"
-       style="fill:#ffffff;stroke:#373746;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+       style="fill:#ffffff;stroke:#373746;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       inkscape:export-filename="/mnt/FILES/development/git/node-express-reload/images/logo.png"
+       inkscape:export-xdpi="88.603836"
+       inkscape:export-ydpi="88.603836" />
     <line
        x1="31.011583"
        y1="132.44502"
        x2="31.022457"
        y2="132.44502"
        id="line9903"
-       style="fill:#ffffff;stroke:#000000;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round" />
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round"
+       inkscape:export-filename="/mnt/FILES/development/git/node-express-reload/images/logo.png"
+       inkscape:export-xdpi="88.603836"
+       inkscape:export-ydpi="88.603836" />
     <line
        x1="35.244919"
        y1="132.44502"
        x2="35.255795"
        y2="132.44502"
        id="line9903-3"
-       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#f7b905;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1" />
+       style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#f7b905;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+       inkscape:export-filename="/mnt/FILES/development/git/node-express-reload/images/logo.png"
+       inkscape:export-xdpi="88.603836"
+       inkscape:export-ydpi="88.603836" />
     <line
        x1="44.432621"
        y1="132.44502"
        x2="44.443497"
        y2="132.44502"
        id="line9903-3-3"
-       style="font-variation-settings:normal;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#1adb04;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000" />
+       style="font-variation-settings:normal;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#1adb04;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000"
+       inkscape:export-filename="/mnt/FILES/development/git/node-express-reload/images/logo.png"
+       inkscape:export-xdpi="88.603836"
+       inkscape:export-ydpi="88.603836" />
     <line
        x1="33.12825"
        y1="132.44502"
        x2="33.139126"
        y2="132.44502"
        id="line9903-3-6"
-       style="fill:#ffff00;stroke:#d51212;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1" />
+       style="fill:#ffff00;stroke:#d51212;stroke-width:1.08717;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       inkscape:export-filename="/mnt/FILES/development/git/node-express-reload/images/logo.png"
+       inkscape:export-xdpi="88.603836"
+       inkscape:export-ydpi="88.603836" />
   </g>
 </svg>

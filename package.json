@@ -1,6 +1,6 @@
 {
   "name": "node-express-reload",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Restart host running server express.js, kill process, kill port, reload express.js and install packages NPM.",
   "main": "index.js",
   "scripts": {
