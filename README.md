@@ -4,5 +4,5 @@ Restart host server run express, kill process, kill port, reload express and ins
 # NOT WORKING STILL... yet!
 
 ## Example
-GET http://server-node.yourdomon.com/kill-and-restart-process/**<PID>**
+GET http://domain.com/**kill-and-restart-process**/**PID**
 
