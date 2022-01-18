@@ -57,15 +57,15 @@ reload complete ✅
 
 | router | action | value | example |
 |--------| -------| ------| --------|
-| /secure | | | |
-| /kill-port/:port | | | |
-| /kill-port-and-restart/:port | | | |
-| /kill-process/:pid | | | |
-| /kill-process-and-restart/:pid | | | |
-| /list-of-process | | | |
-| /list-all-processes | | | |
-| /npm/:type/:pid/:packages | | | |
-| /npm/fix/:pid | | | |
+| /**ner**/secure | | | |
+| /**ner**/kill-port/:port | | | |
+| /**ner**/kill-port-and-restart/:port | | | |
+| /**ner**/kill-process/:pid | | | |
+| /**ner**/kill-process-and-restart/:pid | | | |
+| /**ner**/list-of-process | | | |
+| /**ner**/list-all-processes | | | |
+| /**ner**/npm/:type/:pid/:packages | | | |
+| /**ner**/npm/fix/:pid | | | |
 
 ## License
 
