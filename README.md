@@ -1,9 +1,17 @@
-# Node Express Reload
+<p align="center">
+  <br/>
+  <br/>
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/images/logo.png" alt="node-express-reload (Natan Cabral)"/>
+  <br/>
+  <br/>
+</p>
+
+# node-express-reload
 Restart host server run express, kill process, kill port, reload express and install package node NPM. 
 
 ### NOT WORKING STILL... yet!
 
-## Install [<img src="https://github.com/natancabral/node-express-reload/blob/main/npm-tile.png">](https://www.npmjs.com/package/node-express-reload)
+## Install [<img src="https://github.com/natancabral/node-express-reload/blob/main/images/npm-tile.png">](https://www.npmjs.com/package/node-express-reload)
 
 ```shell
 npm install node-express-reload
