@@ -57,8 +57,6 @@ reload complete ✅
 | router | action | value | example |
 |--------| -------| ------| --------|
 | /**ner**/secure | | | |
-| /**ner**/kill-port/:port | | | |
-| /**ner**/kill-port-and-restart/:port | | | |
 | /**ner**/kill-process/:pid | | | |
 | /**ner**/kill-process-and-restart/:pid | | | |
 | /**ner**/list-of-process | | | |
