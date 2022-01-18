@@ -6,7 +6,7 @@ Restart host server run express, kill process, kill port, reload express and ins
 ## Install [<img src="https://github.com/natancabral/node-express-reload/blob/main/npm-tile.png">](https://www.npmjs.com/package/node-express-reload)
 
 ```shell
-npm install node-express-reload --save-dev
+npm install node-express-reload
 ```
 
 ## server.js
@@ -19,27 +19,21 @@ const PORT = 8080;
 
 app.use(ner());
 app.use('/ner/', ner);
-app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${}`));
+app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${POST}`));
 app.listen(PORT);
 ```
 
 ## output
 
 ```shell
-> command 1
-
-out
-out
-out
-out
-out
-out
+I'm pid 849113 and port 8080
 ```
 
-## request restart
+## request kill and restart PID
 
 ```shell
-> curl http://localhost:8080/ner/kill-and-restart-process
+$ curl http://localhost:8080/ner/kill-and-restart-process/PID
+// PID is a number
 ```
 
 ## output
