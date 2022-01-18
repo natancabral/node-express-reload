@@ -1,7 +1,7 @@
 {
   "name": "node-express-reload",
   "version": "1.0.0",
-  "description": "Restart host server running express, kill process, kill port, reload express and install package node NPM.",
+  "description": "Restart host running server express.js, kill process, kill port, reload express.js and install packages NPM.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
