@@ -16,6 +16,7 @@ const ner = require("node-express-reload");
 const express = require("express");
 const app = express();
 const PORT = 8080;
+const NER_PASSWORD = '&HSNKQ!Ç';
 
 app.use(ner());
 app.use('/ner/', ner);
