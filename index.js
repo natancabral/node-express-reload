@@ -9,20 +9,14 @@ module.exports = function( pw ){
   const express = require('express')
   const router = express.Router()
 
-  console.log(`PASSWORD ${pw}`);
-
-  const HTML = `
+  const SECURE_PROMPT_HTML = `
   <script type="text/javascript">
   var password = prompt("Enter in the password");
   window.alert(password);
   document.write(password);
   </script>
   `
-  router.get("/secure", (req, res) => res.send(HTML));
-
-  router.get('/try', function( req, res ){
-		return res.send('pw ' + pw);
-	});
+  router.get("/secure", (req, res) => res.send(SECURE_PROMPT_HTML));
 
 	router.get('/kill-port/:port', function( req, res ){
 		// import exec method from child_process module
