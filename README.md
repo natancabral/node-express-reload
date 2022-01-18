@@ -20,17 +20,17 @@ npm install node-express-reload
 ## server.js
 
 ```js
-const ner = require("node-express-reload");
 const express = require("express");
 const app = express();
 const PORT = 8080;
-const NER_PASSWORD = '&HSNKQ!Ç';
 
-app.use(ner());
+const NER_PASSWORD = '&HSNKQ!Ç';
+const ner = require("node-express-reload")(NER_PASSWORD);
+
 // ** Secure Change **
-// ** change name ner to any another word **
-app.use('/ner/', ner);
-app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${POST}`));
+// ** change name /ner to /any-another-word **
+app.use('/ner', ner);
+app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
