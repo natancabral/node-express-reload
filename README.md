@@ -24,7 +24,7 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 
-const NER_PASSWORD = '&HSNKQ!Ç';
+const NER_PASSWORD = '22AAbbCC#$';
 // ** Secure Change **
 // ** change name /ner to /any-another-word **
 app.use('/ner', require("node-express-reload")(NER_PASSWORD));

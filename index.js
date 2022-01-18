@@ -9,14 +9,35 @@ module.exports = function( pw ){
   const express = require('express')
   const router = express.Router()
 
+  const GET_PID = `Im pid ${process.pid}`;
   const SECURE_PROMPT_HTML = `
   <script type="text/javascript">
-  var password = prompt("Enter in the password");
-  window.alert(password);
-  document.write(password);
+  var password = window.prompt("Enter in the password");
+  if(password === '${pw}')
+    document.write('${GET_PID}');
+  else 
+    document.write('Ops!');
   </script>
-  `
-  router.get("/secure", (req, res) => res.send(SECURE_PROMPT_HTML));
+  `;
+  const SECURE_MESSAGE = `Change your password. 
+  <li>uppercase</li>
+  <li>lowercase</li>
+  <li>number</li>
+  <li>special character</li>
+  <li>6 length</li>
+  `;
+
+  const checkPassWord = (p) => {
+    if(p.indexOf('2AAbbCC#') > -1) {
+      return false;
+    } else if (!p.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/)){ 
+      // https://iqcode.com/code/javascript/regex-password
+      return false;
+    }
+    return true;
+  }
+
+  router.get("/secure", (req, res) => checkPassWord(pw) ? res.send(SECURE_PROMPT_HTML) : res.send(SECURE_MESSAGE) );
 
 	router.get('/kill-port/:port', function( req, res ){
 		// import exec method from child_process module
