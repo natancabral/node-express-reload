@@ -19,6 +19,8 @@ const PORT = 8080;
 const NER_PASSWORD = '&HSNKQ!Ç';
 
 app.use(ner());
+// ** Secure Change **
+// ** change name ner to any another word **
 app.use('/ner/', ner);
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${POST}`));
 app.listen(PORT);
