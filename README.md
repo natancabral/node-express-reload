@@ -31,9 +31,9 @@ I'm pid 849113 and port 8080
 
 ## request kill and restart PID
 
+PID is a number
 ```shell
 $ curl http://localhost:8080/ner/kill-and-restart-process/PID
-// PID is a number
 ```
 
 ## output
@@ -62,3 +62,5 @@ The MIT License.
     </td>
   </tr>
 </table>
+
+## Thank you
