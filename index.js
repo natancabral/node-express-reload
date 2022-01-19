@@ -67,7 +67,7 @@ module.exports = function( pw ){
 		return res.send('process killed');
 	});
 
-	router.get('/list-of-process', function( req, res ) {
+	router.get('/list', function( req, res ) {
 		let out = '';
 		exec("ps -aef | grep 'node'", (e, stdout, stderr)=> {
 			if (e instanceof Error) {
@@ -97,7 +97,7 @@ module.exports = function( pw ){
 		});	
 	});
 	
-	router.get('/list-all-processes', function( req, res ) {
+	router.get('/list-all', function( req, res ) {
 		let out = '';
 		exec("ps -aef", (e, stdout, stderr)=> {
 			if (e instanceof Error) {
