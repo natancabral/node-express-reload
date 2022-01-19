@@ -81,9 +81,11 @@ reload complete ✅
 
 ## Actions
 
+<!-- | /**ner**/secure | You need set permission to enter | http://localhost:8080/ner/secure | -->
+
+
 | router | action | example |
 | -------| -------| --------|
-<!-- | /**ner**/secure | You need set permission to enter | http://localhost:8080/ner/secure | -->
 | /**ner**/kill/:pid? | kill process | http://localhost:8080/ner/kill |
 | /**ner**/reload/:pid? | kill process and restart | http://localhost:8080/ner/reload |
 | /**ner**/list | pid list | http://localhost:8080/ner/list |
