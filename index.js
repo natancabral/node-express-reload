@@ -160,13 +160,13 @@ module.exports = function (settings) {
     });
   });
 
-  router.get("/npm/:type/:pid/:list", function (req, res) {
+  router.get("/npm/:type/:list", function (req, res) {
+
     const list = String(req.params.list)
-      .replace(/\|/g, "/")
-      .split(",")
-      .join(" ");
-    const pid1 = req.params.pid >> 0;
-    const pid2 = process.pid >> 0;
+    .replace(/\|/g, "/")
+    .split(",")
+    .join(" ");
+
     let type =
       req.params.type === "u"
         ? "uninstall"
@@ -174,8 +174,7 @@ module.exports = function (settings) {
         ? "i"
         : false;
 
-    if (!type || !pid1 || !pid2 || pid1 !== pid2 || list.length < 4) {
-      //res.send((pid1 === pid2 ? 'TRUE' : 'FALSE') + '|' + pid1 + '|' + pid2);
+    if (!type || list.length < 4) {
       res.send("Error");
       return;
     }
@@ -197,15 +196,7 @@ module.exports = function (settings) {
     });
   });
 
-  router.get("/npm/fix/:pid", function (req, res) {
-    const pid1 = req.params.pid >> 0;
-    const pid2 = process.pid >> 0;
-
-    if (!pid1 || !pid2 || pid1 !== pid2) {
-      //res.send((pid1 === pid2 ? 'TRUE' : 'FALSE') + '|' + pid1 + '|' + pid2);
-      res.send("Error");
-      return;
-    }
+  router.get("/npm/fix", function (req, res) {
 
     let out = "";
     const scrpt = `npm audit fix`;
