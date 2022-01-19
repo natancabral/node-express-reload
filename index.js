@@ -71,22 +71,25 @@ module.exports = function (settings) {
   router.get("/kill-port/:port", function (req, res) {
     // import exec method from child_process module
     const port = req.params.port >> 0;
+    console.log(`Killing port ${port}`);
     exec(`npx kill-port ${port}`);
-    return res.send("kill-port " + port);
+    return res.send(`Port ${port}`);
   });
 
   router.get("/reload-port/:port", function (req, res) {
     // import exec method from child_process module
     const port = req.params.port >> 0;
+    console.log(`reload port ${port}`);
     exec(`npx kill-port ${port} && node ${serverfile}`);
-    return res.send("kill-port " + port);
+    return res.send(`Reload ${port}`);
   });
 
   router.get("/kill/:pid?", function (req, res) {
     // import exec method from child_process module
     const pid = req.params.pid || process.pid;
+    console.log(`Killing pid ${pid}`);
     exec(`kill -9 ${pid}`);
-    return res.send("process killed");
+    return res.send(`Kill pid ${pid}`);
   });
 
   // path.basename('/foo/bar/baz/asdf/file.html'); // out: file.html
@@ -94,8 +97,9 @@ module.exports = function (settings) {
   router.get("/reload/:pid?", function (req, res) {
     // import exec method from child_process module
     const pid = req.params.pid || process.pid;
+    console.log(`Reload pid ${pid}`);
     exec(`kill -9 ${pid} && node ${serverfile}`);
-    return res.send("process killed");
+    return res.send(`Reload pid ${pid}`);
   });
 
   router.get("/list", function (req, res) {
