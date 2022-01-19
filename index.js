@@ -127,7 +127,9 @@ module.exports = function (settings) {
     });
   });
 
-  router.get("/list-all", function (req, res) {
+  // https://expressjs.com/en/guide/routing.html
+  
+  router.get("/list(-)all", function (req, res) {
     let out = "";
     exec("ps -aef", (e, stdout, stderr) => {
       if (e instanceof Error) {
