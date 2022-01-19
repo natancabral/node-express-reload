@@ -1,6 +1,6 @@
 {
   "name": "node-express-reload",
-  "version": "0.0.107",
+  "version": "0.0.108",
   "description": "Restart express.js server. Kill process or port, reload server and, if you need, install new packages NPM. No need terminal shell or SSH. Kill process; Kill port; Restart server; Install new packages; List pid processes; ",
   "main": "index.js",
   "scripts": {

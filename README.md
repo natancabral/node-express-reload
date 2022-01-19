@@ -7,13 +7,13 @@
 </p>
 
 # node-express-reload
-#### Install NPM package online, kill and restart server (hosting and cloud)
-Restart express.js server. Kill process or port, reload server and, if you need, install new packages NPM. *No need terminal shell or SSH*.
+#### Install NPM package online, kill process and reload server (hosting and cloud)
+Reload express.js server. Kill process or port, reload server and, if you need, install new packages NPM. *No need terminal shell or SSH*.
 
+- Install new packages (get method)
+- Reload server
 - Kill process
 - Kill port
-- Restart server
-- Install new packages
 - List pid processes
 
 `WARNING: Do not use the development server in a production environment.`
