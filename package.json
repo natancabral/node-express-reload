@@ -1,6 +1,6 @@
 {
   "name": "node-express-reload",
-  "version": "0.0.100",
+  "version": "0.0.101",
   "description": "Restart express.js server. Kill process or port, reload server and, if you need, install new packages NPM. No need terminal shell or SSH. Kill process; Kill port; Restart server; Install new packages; List pid processes; ",
   "main": "index.js",
   "scripts": {
@@ -27,8 +27,13 @@
   },
   "homepage": "https://github.com/natancabral/node-express-reload#readme",
   "devDependencies": {
-    "express": "^4.17.2",
+    "express-session": "^1.17.2",
     "node-express-reload": "^0.0.6",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "session-file-store": "^1.5.0"
+  },
+  "dependencies": {
+    "cookie-parser": "latest",
+    "express": "latest"
   }
 }

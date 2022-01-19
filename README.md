@@ -78,8 +78,8 @@ reload complete ✅
 | router | action | example |
 | -------| -------| --------|
 | /**ner**/secure | You need set permission to enter | http://localhost:8080/ner/secure |
-| /**ner**/kill/:pid | kill process | http://localhost:8080/ner/kill/849113 |
-| /**ner**/kill-and-restart/:pid | kill process and restart | http://localhost:8080/ner/kill-and-restart/849113 |
+| /**ner**/kill/:pid? | kill process | http://localhost:8080/ner/kill |
+| /**ner**/reload/:pid? | kill process and restart | http://localhost:8080/ner/reload/ |
 | /**ner**/list | list | http://localhost:8080/ner/list |
 | /**ner**/list-all | big list | http://localhost:8080/ner/list-all |
 | /**ner**/npm/:type/:pid/:packages | Install and uninstall packages. type: i or u. | http://localhost:8080/ner/npm/i/849113/pdfkit-table,cors |
