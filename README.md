@@ -35,7 +35,7 @@ const PORT = 8080;
 // ** change name /ner to /any-another-word **
 app.use('/ner', require("node-express-reload")({
   key: '&HSN15KQi!Ç', // password
-  application: app, // application express
+  application: app, // app express()
   serverfile: __filename, // ./index.js or ./server.js. call on restart
 }));
 
