@@ -89,7 +89,7 @@ reload complete ✅
 | /**ner**/kill/:pid? | kill process | http://localhost:8080/ner/kill |
 | /**ner**/reload/:pid? | kill process and restart | http://localhost:8080/ner/reload |
 | /**ner**/list | pid list | http://localhost:8080/ner/list |
-| /**ner**/listall ir /**ner**/list-all | big pid list | http://localhost:8080/ner/listall|
+| /**ner**/listall or /list-all | big pid list | http://localhost:8080/ner/listall|
 | /**ner**/npm/:type/:packages | Install and uninstall packages. type: i or u. | http://localhost:8080/ner/npm/i/pdfkit-table,cors |
 | /**ner**/npm/fix | npm fix | http://localhost:8080/ner/npm/fix |
 
