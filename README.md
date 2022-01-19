@@ -43,25 +43,27 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
+<!-- 
 ## output
 
 ```shell
 > I'm pid 849113 and port 8080
 ```
+--> 
 
-## reload
+## Reload server
 ```
 GET http://localhost:8080/ner/reload/
 ```
 
-## kill process/server
+## Kill server (pid process)
 
 ```
 GET http://localhost:8080/ner/kill/
 GET http://localhost:8080/ner/kill/PID (pid is a number)
 ```
 
-## install npm package
+## Install npm package
 
 ```
 GET http://localhost:8080/ner/npm/i/pdfkit-table,cors
@@ -77,9 +79,11 @@ reload complete ✅
 ```
 -->
 
+## Actions
+
 | router | action | example |
 | -------| -------| --------|
-| /**ner**/secure | You need set permission to enter | http://localhost:8080/ner/secure |
+<!-- | /**ner**/secure | You need set permission to enter | http://localhost:8080/ner/secure | -->
 | /**ner**/kill/:pid? | kill process | http://localhost:8080/ner/kill |
 | /**ner**/reload/:pid? | kill process and restart | http://localhost:8080/ner/reload |
 | /**ner**/list | pid list | http://localhost:8080/ner/list |
