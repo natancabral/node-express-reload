@@ -46,27 +46,20 @@ app.listen(PORT);
 I'm pid 849113 and port 8080
 ```
 
-## init secure password
+## reload
 
-```shell
-$ http://localhost:8080/ner/secure/
-# enter your passoword
-```
+- http://localhost:8080/ner/reload/
 
 ## install npm package
 
-PID is a number
-```shell
-$ http://localhost:8080/ner/npm/i/PID/pdfkit-table,cors
-```
+- http://localhost:8080/ner/npm/i/PID/pdfkit-table,cors
 
-## request kill and restart PID
+## kill process/server
 
-PID is a number
-```shell
-$ http://localhost:8080/ner/kill-and-restart/PID
-```
+- GET http://localhost:8080/ner/kill/
+- GET http://localhost:8080/ner/kill/PID
 
+<!-- 
 ## output
 
 ```shell
@@ -74,6 +67,7 @@ reload requested 👍
 ...
 reload complete ✅
 ```
+-->
 
 | router | action | example |
 | -------| -------| --------|
