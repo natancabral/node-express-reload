@@ -6,7 +6,6 @@ module.exports = function (settings) {
   const express = require("express");
   const cookieParser = require('cookie-parser');
   const router = express.Router();
-  const storage = require('./storage');
 
   let {key, application, cache, production, serverfile } = settings;
 
@@ -14,6 +13,7 @@ module.exports = function (settings) {
   application.use(cookieParser());
 
   serverfile || (serverfile = 'index.js');
+  cache || (cache = 1); // 1h
 
   // // set
   // res.cookie(cookie_name, 'value', {
@@ -45,21 +45,17 @@ module.exports = function (settings) {
 
   // welcome
   router.get("/", (req, res) => {
-    console.log(req.cookies.OPA); 
-    console.log(storage.getItem('OPA2'));
-    res.send('Hi');
+    console.log(req.cookies.pwkey); 
+    res.send('👋 HI, Welcome node-express-reload.');
   });
 
   // init securety
   router.get("/secure", (req, res) => {
 
-    console.log(req.cookies.OPA);
-    console.log(storage.getItem('OPA2'));
-
-    res.cookie('OPA', 'VALUE', {
-      maxAge: 1000 * 60 * 60, // 1 hour
+    console.log(req.cookies.pwkey);
+    res.cookie('pwkey', key, {
+      maxAge: 1000 * 60 * 60 * cache, // 1 hour
     });
-    storage.setItem('OPA2','VALUE2');
 
     if(checkPassWord(key)){
       res.send(SECURE_PROMPT_HTML);
