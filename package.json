@@ -1,7 +1,7 @@
 {
   "name": "node-express-reload",
-  "version": "0.0.99",
-  "description": "Restart host running server express.js, kill process, kill port, reload express.js and install packages NPM.",
+  "version": "0.0.100",
+  "description": "Restart express.js server. Kill process or port, reload server and, if you need, install new packages NPM. No need terminal shell or SSH. Kill process; Kill port; Restart server; Install new packages; List pid processes; ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/natancabral/node-express-reload.git"
   },
-  "author": "",
+  "author": "natancabral",
+  "keywords": [
+    "npm",
+    "express",
+    "node",
+    "pid",
+    "port",
+    "node-js",
+    "restart",
+    "kill"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/natancabral/node-express-reload/issues"
