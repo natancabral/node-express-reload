@@ -31,10 +31,13 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 
-const NER_PASSWORD = '22AAbbCC#$';
 // ** Secure Change **
 // ** change name /ner to /any-another-word **
-app.use('/ner', require("node-express-reload")(NER_PASSWORD));
+app.use('/ner', require("node-express-reload")({
+  key: '&HSN15KQi!Ç', // password
+  application: app, // application express
+  serverfile: __filename, // ./index.js or ./server.js. call on restart
+}));
 
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
@@ -43,7 +46,7 @@ app.listen(PORT);
 ## output
 
 ```shell
-I'm pid 849113 and port 8080
+> I'm pid 849113 and port 8080
 ```
 
 ## reload
@@ -53,15 +56,16 @@ GET http://localhost:8080/ner/reload/
 
 ## install npm package
 
-`
+```
 GET http://localhost:8080/ner/npm/i/PID/pdfkit-table,cors
-`
+```
 
 ## kill process/server
 
-- GET http://localhost:8080/ner/kill/
-- GET http://localhost:8080/ner/kill/PID
-
+```
+GET http://localhost:8080/ner/kill/
+GET http://localhost:8080/ner/kill/PID
+```
 <!-- 
 ## output
 

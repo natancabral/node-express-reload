@@ -1,6 +1,6 @@
 const { send } = require("process");
 
-module.exports = function (pw, settings) {
+module.exports = function (settings) {
   
   const { exec } = require("child_process");
   const express = require("express");
@@ -8,7 +8,7 @@ module.exports = function (pw, settings) {
   const router = express.Router();
   const storage = require('./storage');
 
-  let {application, cache, production, serverfile } = settings;
+  let {key, application, cache, production, serverfile } = settings;
 
   // SET cookie
   application.use(cookieParser());
@@ -30,7 +30,7 @@ module.exports = function (pw, settings) {
   const SECURE_PROMPT_HTML = `
   <script type="text/javascript">
     var password = window.prompt("Enter KEY");
-    if(password === '${pw}'){
+    if(password === '${key}'){
       document.write('👍 ${GET_PID}');
       // window.location='/';
     } else {
@@ -61,7 +61,7 @@ module.exports = function (pw, settings) {
     });
     storage.setItem('OPA2','VALUE2');
 
-    if(checkPassWord(pw)){
+    if(checkPassWord(key)){
       res.send(SECURE_PROMPT_HTML);
     } else {
       res.send(SECURE_MESSAGE);
