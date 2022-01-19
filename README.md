@@ -8,7 +8,13 @@
 
 # node-express-reload
 #### Install NPM package online, kill and restart server (hosting and cloud)
-Restart host running express.js server, kill process, kill port, reload express.js and install packages NPM. *No need terminal shell or SSH*.
+Restart express.js server. Kill process or port, reload server and, if you need, install new packages NPM. *No need terminal shell or SSH*.
+
+- Kill process
+- Kill port
+- Restart server
+- Install new packages
+- List pid processes
 
 `WARNING: Do not use the development server in a production environment.`
 
