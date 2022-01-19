@@ -47,12 +47,15 @@ I'm pid 849113 and port 8080
 ```
 
 ## reload
-
-- http://localhost:8080/ner/reload/
+```
+GET http://localhost:8080/ner/reload/
+```
 
 ## install npm package
 
-- http://localhost:8080/ner/npm/i/PID/pdfkit-table,cors
+`
+GET http://localhost:8080/ner/npm/i/PID/pdfkit-table,cors
+`
 
 ## kill process/server
 
