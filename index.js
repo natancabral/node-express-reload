@@ -1,18 +1,17 @@
 const { send } = require("process");
 
 module.exports = function (settings) {
-  
   const { exec } = require("child_process");
   const express = require("express");
-  const cookieParser = require('cookie-parser');
+  const cookieParser = require("cookie-parser");
   const router = express.Router();
 
-  let {key, application, cache, production, serverfile } = settings;
+  let { key, application, cache, production, serverfile } = settings;
 
   // SET cookie
   application.use(cookieParser());
 
-  serverfile || (serverfile = 'index.js');
+  serverfile || (serverfile = "index.js");
   cache || (cache = 1); // 1h
 
   // // set
@@ -41,23 +40,23 @@ module.exports = function (settings) {
   const SECURE_MESSAGE = `Change your password. <li>uppercase</li> <li>lowercase</li> <li>number</li> <li>special character</li> <li>6 length</li> `;
 
   // check pw strong
-  const checkPassWord = (p) => p.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/);
+  const checkPassWord = (p) =>
+    p.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/);
 
   // welcome
   router.get("/", (req, res) => {
-    console.log(req.cookies.pwkey); 
-    res.send('👋 HI, Welcome node-express-reload.');
+    console.log(req.cookies.pwkey);
+    res.send("👋 HI, Welcome node-express-reload.");
   });
 
   // init securety
   router.get("/secure", (req, res) => {
-
     console.log(req.cookies.pwkey);
-    res.cookie('pwkey', key, {
+    res.cookie("pwkey", key, {
       maxAge: 1000 * 60 * 60 * cache, // 1 hour
     });
 
-    if(checkPassWord(key)){
+    if (checkPassWord(key)) {
       res.send(SECURE_PROMPT_HTML);
     } else {
       res.send(SECURE_MESSAGE);
@@ -128,8 +127,8 @@ module.exports = function (settings) {
   });
 
   // https://expressjs.com/en/guide/routing.html
-  
-  router.get("/list(-)all", function (req, res) {
+
+  function listall(req, res) {
     let out = "";
     exec("ps -aef", (e, stdout, stderr) => {
       if (e instanceof Error) {
@@ -156,14 +155,16 @@ module.exports = function (settings) {
         res.send("<html><pre>" + out);
       });
     });
-  });
+  }
+
+  router.get("/list-all", listall);
+  router.get("/listall", listall);
 
   router.get("/npm/:type/:list", function (req, res) {
-
     const list = String(req.params.list)
-    .replace(/\|/g, "/")
-    .split(",")
-    .join(" ");
+      .replace(/\|/g, "/")
+      .split(",")
+      .join(" ");
 
     let type =
       req.params.type === "u"
@@ -195,7 +196,6 @@ module.exports = function (settings) {
   });
 
   router.get("/npm/fix", function (req, res) {
-
     let out = "";
     const scrpt = `npm audit fix`;
     exec(scrpt, (e, stdout, stderr) => {
