@@ -92,6 +92,7 @@ reload complete ✅
 | /**ner**/listall or /list-all | big pid list | http://localhost:8080/ner/listall|
 | /**ner**/npm/:type/:packages | Install and uninstall packages. type: i or u. | http://localhost:8080/ner/npm/i/pdfkit-table,cors |
 | /**ner**/npm/fix | npm fix | http://localhost:8080/ner/npm/fix |
+| /**ner**/npm/install | npm install package.json | http://localhost:8080/ner/npm/install |
 
 ## License
 

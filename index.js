@@ -89,11 +89,21 @@ module.exports = function (settings) {
 
   // path.basename('/foo/bar/baz/asdf/file.html'); // out: file.html
 
+  // Message:
+  // Incomplete response received from application
+  // Solution:
+  // usar spawn
+
   router.get("/reload/:pid?", function (req, res) {
     // import exec method from child_process module
     const pid = req.params.pid || process.pid;
     console.log(`Reload pid ${pid}`);
-    exec(`kill -9 ${pid} && node ${serverfile}`);
+    try {
+      // usar spawn
+      exec(`kill -9 ${pid} && node ${serverfile}`);
+    } catch (error) {
+      console.log(error);
+    }
     return res.send(`Reload pid ${pid}`);
   });
 
@@ -212,6 +222,25 @@ module.exports = function (settings) {
       res.send("<html><pre>" + out);
     });
   });
+
+  router.get("/npm/install", function (req, res) {
+    let out = "";
+    const scrpt = `npm install`;
+    exec(scrpt, (e, stdout, stderr) => {
+      if (e instanceof Error) {
+        console.error(e);
+        //throw e;
+      }
+      console.log("stdout:\n", stdout);
+      console.log("stderr:\n", stderr);
+
+      out += stdout;
+      out += stderr;
+
+      res.send("<html><pre>" + out);
+    });
+  });
+
 
   return router;
 };
