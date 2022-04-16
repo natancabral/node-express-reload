@@ -27,9 +27,8 @@
   },
   "homepage": "https://github.com/natancabral/node-express-reload#readme",
   "devDependencies": {
-    "express-session": "^latest",
+    "express-session": "latest",
     "node-express-reload": "latest",
-    "nodemon": "latest",
     "session-file-store": "latest"
   },
   "dependencies": {
