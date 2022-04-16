@@ -15,6 +15,7 @@ Reload express.js server. Kill process or port, reload server and, if you need, 
 - Kill process
 - Kill port
 - List pid processes
+- Npm list, fix, audit
 - Other...
 
 `WARNING: Do not use the development server in a production environment.`
@@ -25,25 +26,7 @@ Reload express.js server. Kill process or port, reload server and, if you need, 
 npm install node-express-reload
 ```
 
-## Screens
-
-<p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/signin.png" alt="node-express-reload (Natan Cabral)"/>
-</p>
-<p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/help.png" alt="node-express-reload (Natan Cabral)"/>
-</p>
-<p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/reload.png" alt="node-express-reload (Natan Cabral)"/>
-</p>
-<p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
-</p>
-<p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
-</p>
-
-## server.js
+## server.js (or index.js)
 
 ```js
 const express = require("express");
@@ -65,46 +48,35 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
-<!-- 
-## output
-
-```shell
-> I'm pid 849113 and port 8080
-```
---> 
-
 ## Access Terminal Virtual
-```
-GET http://localhost:8080/ner
-```
+- http://localhost:8080/ner
 
-## Reload server
+## Screens
+
+<p align="center">
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/signin.png" alt="node-express-reload (Natan Cabral)"/>
+</p>
+<p align="center">
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/help.png" alt="node-express-reload (Natan Cabral)"/>
+</p>
+<p align="center">
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/reload.png" alt="node-express-reload (Natan Cabral)"/>
+</p>
+<p align="center">
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
+</p>
+<p align="center">
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
+</p>
+
+
+## Samples
 ```
 GET http://localhost:8080/ner/reload/
-```
-
-## Kill server (pid process)
-
-```
 GET http://localhost:8080/ner/kill/
 GET http://localhost:8080/ner/kill/PID (pid is a number)
-```
-
-## Install npm package
-
-```
 GET http://localhost:8080/ner/npm/i/pdfkit-table,cors
 ```
-
-<!-- 
-## output
-
-```shell
-reload requested 👍
-...
-reload complete ✅
-```
--->
 
 ## Actions
 
