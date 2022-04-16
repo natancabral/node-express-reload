@@ -8,17 +8,16 @@
 
 # node-express-reload
 #### Install NPM package online, kill process and reload server (hosting and cloud)
+`WARNING: Do not use the development server in a production environment.`
 Reload express.js server. Kill process or port, reload server and, if you need, install new packages NPM. *No need terminal shell or SSH*.
 
-- Install new packages (get method)
 - Reload server
 - Kill process
 - Kill port
 - List pid processes
-- Npm list, fix, audit
-- Other...
+- Install new packages (get method)
+- List, fix and audit
 
-`WARNING: Do not use the development server in a production environment.`
 
 ## Install [<img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-tile.png">](https://www.npmjs.com/package/node-express-reload)
 
@@ -26,7 +25,7 @@ Reload express.js server. Kill process or port, reload server and, if you need, 
 npm install node-express-reload
 ```
 
-## server.js (or index.js)
+## Example
 
 ```js
 const express = require("express");
@@ -48,8 +47,9 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
-## Access Terminal Virtual
+## Terminal
 - http://localhost:8080/ner
+- http://localhost:8080/any-another-word
 
 ## Screens
 
@@ -85,10 +85,11 @@ GET http://localhost:8080/ner/npm/i/pdfkit-table,cors
 
 | router | action | example |
 | -------| -------| --------|
-| /**ner**/kill/:pid? | kill process | http://localhost:8080/ner/kill |
+| /**ner**/kill | kill owner process | http://localhost:8080/ner/kill |
+| /**ner**/kill/:pid? | kill process | http://localhost:8080/ner/kill/123456 |
 | /**ner**/reload/:pid? | kill process and restart | http://localhost:8080/ner/reload |
 | /**ner**/list | pid list | http://localhost:8080/ner/list |
-| /**ner**/listall or /list-all | big pid list | http://localhost:8080/ner/listall |
+| /**ner**/list-all | big pid list | http://localhost:8080/ner/listall |
 | /**ner**/pid | show process id (PID) | http://localhost:8080/ner/pid |
 | /**ner**/npm/:type/:packages | Install and uninstall packages. type: i or u. | http://localhost:8080/ner/npm/i/pdfkit-table,cors |
 | /**ner**/npm/fix | npm fix | http://localhost:8080/ner/npm/fix |
