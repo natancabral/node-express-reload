@@ -1,7 +1,7 @@
 <p align="center">
   <br/>
   <br/>
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/images/logo.png" alt="node-express-reload (Natan Cabral)"/>
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/logo.png" alt="node-express-reload (Natan Cabral)"/>
   <br/>
   <br/>
 </p>
@@ -28,19 +28,19 @@ npm install node-express-reload
 ## Screens
 
 <p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/images/signin.png" alt="node-express-reload (Natan Cabral)"/>
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/signin.png" alt="node-express-reload (Natan Cabral)"/>
 </p>
 <p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/images/help.png" alt="node-express-reload (Natan Cabral)"/>
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/help.png" alt="node-express-reload (Natan Cabral)"/>
 </p>
 <p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/images/reload.png" alt="node-express-reload (Natan Cabral)"/>
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/reload.png" alt="node-express-reload (Natan Cabral)"/>
 </p>
 <p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
 </p>
 <p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
 </p>
 
 ## server.js
