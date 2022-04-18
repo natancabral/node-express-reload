@@ -46,7 +46,7 @@ app.use('/ner', require("node-express-reload")({
   serverfile: __filename,
 }));
 
-// Open terminal 
+// Open panel 
 // http://localhost:8080/ner/
 // http://localhost:8080/any-another-word/
 // Manual reload 
