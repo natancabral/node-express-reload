@@ -29,7 +29,7 @@
 npm install node-express-reload
 ```
 
-## Example 1 (restart server)
+## Example 1
 
 [view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
 
@@ -43,10 +43,13 @@ const PORT = 8080;
 app.use('/ner', require("node-express-reload")({
   username: 'admin', // if not defined, your username will be admin
   password: '&HSN15KQi!Ç',
-  serverfile: __filename, // __filename, ./index.js or ./server.js. call on restart
-  // watcher: ['.'], // {array}  __filename | . | ./ | index.js | /path-name | . (dot is all depth files)
-  // depth: 10,
+  serverfile: __filename,
 }));
+
+// Open terminal 
+// http://localhost:8080/ner/
+// Manual reload 
+// http://localhost:8080/ner/reload/
 
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
@@ -72,7 +75,7 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
-## Example 3 (watcher files and restart server)
+## Example 3 (watcher files)
 
 [view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
 

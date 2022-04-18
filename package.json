@@ -1,6 +1,6 @@
 {
   "name": "node-express-reload",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Helps to refresh your application after changes. Reload application server (hosting and cloud), kill process and install NPM packages online",
   "main": "index.js",
   "scripts": {
