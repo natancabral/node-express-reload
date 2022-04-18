@@ -75,6 +75,25 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
+## Example 3 (watcher files)
+
+[view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
+
+```js
+const express = require("express");
+const app = express();
+const PORT = 8080;
+
+app.use('/ner', require("node-express-reload")({
+  serverfile: __filename,
+  watcher: ['.'], // {array}  __filename | . | ./ | index.js | /path-name | . (dot is all depth files)
+  depth: 10,
+}));
+
+app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
+app.listen(PORT);
+```
+
 ## Init
 
 - http://localhost:8080/ner
