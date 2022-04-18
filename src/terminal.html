@@ -128,7 +128,7 @@
         name: 'logout',
         reg: [/^logout$/ig, /^exit$/ig],
         filter: null,
-        description: 'Loggout node-express-reload. Clear cookies and sessions of access. Remove your node-express-load login', 
+        description: 'Logout node-express-reload. Clear cookies and sessions of access. Remove your node-express-load login', 
         premessage: '' 
       },
       { 
@@ -400,8 +400,6 @@
         inputdisabled(false);
         return;
       }
-
-      const pree = document.getElementById('terminal-history');
 
       var xhr = new XMLHttpRequest();
       xhr.open("GET", `${baseUrl}/${value}`, true);

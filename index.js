@@ -7,31 +7,22 @@ module.exports = function (settings) {
   const express = require("express");
   // Importing express-session module
   const session = require("express-session");
+  const { MemoryStore } = require("express-session");
   // Importing file-store module
   const filestore = require("session-file-store")(session);
   // Router
   const router = express.Router();
   
-  let { username, password, application, pwcache, production, serverfile, neruservar, storage } = settings;
+  let { username, password, application, pwcache, production, serverfile, neruservar, storage, removeterminal } = settings;
 
   serverfile || (serverfile = "index.js");
   pwcache || (pwcache = 1); // 1h
   neruservar || (neruservar = 'ner_user_auth');
-  storage || (storage = 'cookie'); // session
+  storage || (storage = 'cookie'); // cookie | session | memory
   username || (username = 'admin');
-  application = router;
-
-  // // set
-  // res.cookie(cookie_name, 'value', {
-  //   maxAge: 1000 * 60 * 60, // 1 hour
-  // });
-  // // get
-  // req.cookies.username;
-  // // delete
-  // res.clearCookie(cookieName);
-  // // redirect
-  // res.redirect('/');
-
+  application || (application = router);
+  // production || (process.env.NODE_ENV)
+  
   if(storage === 'cookie') {
     // Use Cookie
     application.use(
@@ -41,25 +32,19 @@ module.exports = function (settings) {
     // Use Session
     application.use(
       session({
+        path: '/ner',
         name: "session-ner-name",
         secret: "session-ner-key", // Secret key,
         saveUninitialized: false,
         resave: false,
-        // store: new filestore(),
+        unset: 'destroy',
+        maxAge: 1000 * 60 * pwcache, // 1 min
+        store: storage === 'memory' ? new MemoryStore({ checkPeriod: 1000 * 60 * pwcache, path: '/ner' }) : new filestore({}),
       })
     );
   }
   
   const HTML_PRE = `"<html><pre>`;
-
-  const SECURE_MESSAGE = `
-    Change your password. 
-    <li>uppercase</li> 
-    <li>lowercase</li> 
-    <li>number</li> 
-    <li>special character</li> 
-    <li>6 length</li> 
-  `;
 
   // check pw strong
   const checkPassWord = (p) => p.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/);
@@ -68,9 +53,16 @@ module.exports = function (settings) {
   function auth(req, res, next) {
     
     if(!password) {
-      const err = 'Set password on node-express-load package.\nhttps://www.npmjs.com/package/node-express-reload';
+      const err = 'Set password on node-express-load package. \nhttps://www.npmjs.com/package/node-express-reload';
       res.send(`<pre>Error: ${err}`)
-      throw new Error(err);
+      // throw new Error(err);
+      return;
+    }
+
+    if(!checkPassWord(password)) {
+      const err = `Change your password. \n- uppercase\n- lowercase\n- number\n- special character\n- 6 length`;
+      res.send(`<pre>Error: ${err}`)
+      // throw new Error(err);
       return;
     }
 
@@ -116,10 +108,10 @@ module.exports = function (settings) {
         if(storage === 'cookie') {
           res.cookie(`${neruservar}`, username, {
             path: '/ner',
-            // maxAge: 1000 * 60 * 60 * cache, // 1 hour
+            // maxAge: 1000 * 60 * 60 * pwcache, // 1 hour
             maxAge: 1000 * 60 * pwcache, // 1 min
             // overwrite: true,
-            httpOnly: true,
+            // httpOnly: true,
           });
         } else {
           // console.log('Entrou(2)');
@@ -146,6 +138,7 @@ module.exports = function (settings) {
             console.error(error);
             //throw new Error(error);
             reject(error);
+            return;
           }
           console.log("stdout:\n", stdout);
           console.log("stderr:\n", stderr);
@@ -164,15 +157,23 @@ module.exports = function (settings) {
     
   router.get("/", auth, (req, res) => {
     // console.log(req.baseUrl);
-    // res.send("👋 HI, Welcome node-express-reload.");
-    res.sendFile( __dirname + '/src/terminal.html');
+    if(removeterminal === true) {
+      res.send("👋 HI, Welcome node-express-reload.");
+    } else {
+      res.sendFile( __dirname + '/src/terminal.html');
+    }
+  });
+
+  router.get("/sessions", auth, function(req, res){
+    console.log(req.session);
+    res.send({ session: req.session || {}, cookie: req.cookies || {} });
   });
 
   router.get("/pid", (req, res) => {
     res.send(`${process.pid}`);
   });
 
-  router.get("/dirname", (req, res) => {
+  router.get("/dirname", auth, (req, res) => {
     res.send(`${__dirname}`);
   });
 
@@ -186,11 +187,36 @@ module.exports = function (settings) {
     } else {
       // Clear session
       req.session[neruservar] = null;
-      req.locals[neruservar] = null;
-      // req.session.destroy();  
-      // req.logout();
+      delete req.session[neruservar];
     }
     res.send("Logout. 👋 Clear all cookies and session.");
+  });
+
+  router.get("/destroy", auth, (req, res) => {
+    try {
+
+      // Destroy cookies
+      if(req.cookies){
+        for(const name in req.cookies) {
+          res.clearCookie(name);
+        }  
+      }
+
+      // Destroy sessions
+      if(req.session){
+        req.session.cookie.expires = Date.now();
+        req.session.cookie.maxAge = 0;
+        req.session.destroy();
+      }
+
+      // Remove autehntication
+      res.setHeader("WWW-Authenticate", "Basic"); // realm="Access to the staging site", charset="UTF-8"
+      res.status(401);
+
+      res.send("Destroy all cookies and session.");
+    } catch (error) {
+      res.send("Ops. :(");      
+    }
   });
 
   router.get("/kill-port/:port", auth, function (req, res) {

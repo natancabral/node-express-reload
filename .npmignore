@@ -1,3 +1,6 @@
 .git
 .idea
 local-example
+public
+node_modules
+example

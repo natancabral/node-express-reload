@@ -23,31 +23,30 @@
 
 ## Install [<img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-tile.png">](https://www.npmjs.com/package/node-express-reload)
 
+[![NPM](https://nodei.co/npm/node-express-reload.png)](https://www.npmjs.com/package/node-express-reload)
+
 ```shell
 npm install node-express-reload
 ```
 
 ## Example
 
-[view pdf example](https://github.com/natancabral/node-express-reload/tree/main/example)
+[view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
 
 ```js
 const express = require("express");
 const app = express();
 const PORT = 8080;
 
-// ** Secure Change **
-// ** change name /ner to /any-another-word **
+// ** Secure change ** 
+// ** change route /ner to /any-another-word **
 app.use('/ner', require("node-express-reload")({
   username: 'admin', // if not defined, your username will be admin
-  password: '&HSN15KQi!Ç', // required
-  application: app, // application express
-  serverfile: __filename, // ./index.js or ./server.js. call on restart
-  // pwcache: 7, // password cache in minutes
+  password: '&HSN15KQi!Ç',
+  serverfile: __filename, // __filename, ./index.js or ./server.js. call on restart
   // watcher: [],
 }));
 
-// app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```

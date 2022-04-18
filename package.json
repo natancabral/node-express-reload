@@ -1,6 +1,6 @@
 {
   "name": "node-express-reload",
-  "version": "0.1.2",
+  "version": "0.1.9",
   "description": "Helps to refresh your application after changes. Reload application server (hosting and cloud), kill process and install NPM packages online",
   "main": "index.js",
   "scripts": {
@@ -13,14 +13,16 @@
   },
   "author": "natancabral",
   "keywords": [
-    "npm",
+    "watch-files",
+    "watcher",
+    "fsevents",
     "express",
     "node",
-    "pid",
-    "port",
-    "node-js",
+    "nodemon",
+    "node reload",
     "restart",
-    "kill"
+    "kill",
+    "reload"
   ],
   "license": "MIT",
   "bugs": {
@@ -28,12 +30,12 @@
   },
   "homepage": "https://github.com/natancabral/node-express-reload#readme",
   "devDependencies": {
-    "express-session": "latest",
-    "node-express-reload": "latest",
-    "session-file-store": "latest"
+    "node-express-reload": "latest"
   },
   "dependencies": {
     "cookie-parser": "latest",
-    "express": "latest"
+    "express": "latest",
+    "express-session": "latest",
+    "session-file-store": "latest"
   }
 }
