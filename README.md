@@ -29,7 +29,7 @@
 npm install node-express-reload
 ```
 
-## Example
+## Example 1
 
 [view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
 
@@ -52,7 +52,11 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
-Or silent reload module (router)
+## Example 2
+
+[view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
+
+Silent reload module (express router)
 
 ```js
 const path = require('path');
