@@ -1,3 +1,14 @@
+/**
+ * You need to install on terminal (node.js):
+ * -----------------------------------------------------
+ * $ npm install node-express-reload
+ * -----------------------------------------------------
+ * Run this file:
+ * -----------------------------------------------------
+ * $ node server.js
+ * -----------------------------------------------------
+ * 
+ */
 const path = require('path');
 const express = require("express");
 const app = express();
@@ -11,6 +22,7 @@ app.use('/ner', require("node-express-reload")({
   application: app, // application express
   serverfile: __filename, // ./index.js or ./server.js. call on restart
   // pwcache: 12, // password cache in minutes
+  // watcher: [],
 }));
 
 app.use(express.static(path.join(__dirname, "public")));

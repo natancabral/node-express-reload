@@ -15,8 +15,8 @@
 - Kill process
 - Kill port
 - List pid processes
+- List, fix and audit packages
 - Install new packages (get method)
-- List, fix and audit
 
 
 `WARNING: Do not use the development server in a production environment.`
@@ -44,7 +44,7 @@ app.use('/ner', require("node-express-reload")({
   application: app, // application express
   serverfile: __filename, // ./index.js or ./server.js. call on restart
   // pwcache: 7, // password cache in minutes
-  // watcher: []
+  // watcher: [],
 }));
 
 // app.use(express.static(path.join(__dirname, "public")));
