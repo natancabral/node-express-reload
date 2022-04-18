@@ -1,6 +1,6 @@
 {
   "name": "node-express-reload",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Helps to refresh your application after changes. Reload application server (hosting and cloud), kill process and install NPM packages online",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "node-express-reload": "latest"
   },
   "dependencies": {
+    "chokidar": "^3.5.3",
     "cookie-parser": "latest",
     "express": "latest",
     "express-session": "latest",

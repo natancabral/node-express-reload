@@ -1,5 +1,6 @@
 module.exports = function (settings) {
 
+  // Child Process
   const { exec } = require("child_process");
   // Cookie
   const cookieParser = require("cookie-parser");
@@ -7,13 +8,16 @@ module.exports = function (settings) {
   const express = require("express");
   // Importing express-session module
   const session = require("express-session");
-  const { MemoryStore } = require("express-session");
+  const { MemoryStore } = session;
+  // Watcher
+  const chokidar = require('chokidar');
   // Importing file-store module
   const filestore = require("session-file-store")(session);
   // Router
   const router = express.Router();
+  const path = require('path');
   
-  let { username, password, application, pwcache, production, serverfile, neruservar, storage, removeterminal } = settings;
+  let { username, password, application, pwcache, production, serverfile, neruservar, storage, removeterminal, watcher, depth } = settings;
 
   serverfile || (serverfile = "index.js");
   pwcache || (pwcache = 1); // 1h
@@ -21,8 +25,11 @@ module.exports = function (settings) {
   storage || (storage = 'cookie'); // cookie | session | memory
   username || (username = 'admin');
   application || (application = router);
+  watcher || (watcher = null);
   // production || (process.env.NODE_ENV)
-  
+
+  let watcherlive = null;
+
   if(storage === 'cookie') {
     // Use Cookie
     application.use(
@@ -151,6 +158,58 @@ module.exports = function (settings) {
     });
   }
 
+      // watcher.close().then(() => console.log('closed'));
+  function watchClose() {
+    // Stop watching.
+    // The method is async!
+    watcherlive && watcherlive.close().then(() => console.log('closed'));
+  }
+
+  (function() {
+
+    if(!watcher) return;
+
+    let dir = Array.isArray(watcher) ? watcher : [ String(watcher) ];
+
+    watcherlive = chokidar.watch(dir, {
+      ignored: /(^|[\/\\])\../, // ignore dotfiles
+      // ignored: '*.txt',
+      persistent: true,
+      depth: depth || 10,
+    }).on('all', (event, path) => {
+      console.log(event, path);
+    });
+    
+    // watcherlive
+      // .on('add', path => console.log(`File ${path} has been added`))
+      // .on('change', path => {
+      //   exec(`kill -9 ${process.pid} && node ${serverfile}`);
+      //   console.log(`File ${path} has been changed @@@@`)
+      // })
+      // .on('unlink', path => console.log(`File ${path} has been removed`));
+
+    // More possible events.
+    // watcherlive
+    //   .on('addDir', path => console.log(`Directory ${path} has been added`))
+    //   .on('unlinkDir', path => console.log(`Directory ${path} has been removed`))
+    //   .on('error', error => console.log(`Watcher error: ${error}`))
+    //   .on('ready', () => console.log('Initial scan complete. Ready for changes'))
+      // .on('raw', (event, path, details) => { // internal
+      //   console.log('Raw event info:', event, path, details);
+      // });
+
+    // 'add', 'addDir' and 'change' events also receive stat() results as second
+    // argument when available: https://nodejs.org/api/fs.html#fs_class_fs_stats
+    watcherlive.on('change', (path, stats) => {
+      if (stats) console.log(`File ${path} changed size to ${stats.size}`);
+      exec(`kill -9 ${process.pid} && node ${serverfile}`);
+    });
+
+  })();
+
+  // watcher && watchAll(watcher);
+  // watcher && router.use(watchDir( Array.isArray(watcher) ? watcher[0] : watcher ));
+
   // refresh
   // res.redirect(req.get('referer'));
   // https://www.npmjs.com/package/chokidar
@@ -218,6 +277,21 @@ module.exports = function (settings) {
       res.send("Ops. :(");      
     }
   });
+
+  router.get("/watcher/:close?", auth, (req, res) => {
+    const {close} = req.params || {};
+    if(close === 'close' || close === 'exit') {
+      watchClose();
+      res.send(`Close watcher list.`);
+    } else {
+      if(watcher) {
+        res.send(`Start watcher files and folders... ${Array.isArray(watcher) ? watcher.join(', ') : watcher }`);
+      } else {
+        res.send(`No have watcher list.`);
+      }
+    }
+  });
+  
 
   router.get("/kill-port/:port", auth, function (req, res) {
     // import exec method from child_process module

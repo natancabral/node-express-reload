@@ -21,7 +21,9 @@ app.use('/ner', require("node-express-reload")({
   password: '&HSN15KQi!Ç', // required
   serverfile: __filename, // ./index.js or ./server.js. call on restart
   // pwcache: 12, // password cache in minutes
-  // watcher: [],
+  // storage: 'session', // cookie, session, memory 
+  watcher: ['.'], // {array}  __filename | . | ./ | index.js | /path-name 
+  depth: 10,
 }));
 
 app.use(express.static(path.join(__dirname, "public")));
