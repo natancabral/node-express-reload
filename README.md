@@ -44,10 +44,30 @@ app.use('/ner', require("node-express-reload")({
   username: 'admin', // if not defined, your username will be admin
   password: '&HSN15KQi!Ç',
   serverfile: __filename, // __filename, ./index.js or ./server.js. call on restart
-  // watcher: [],
+  // watcher: ['.'], // {array}  __filename | . | ./ | index.js | /path-name | . (dot is all depth files)
+  // depth: 10,
 }));
 
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
+app.listen(PORT);
+```
+
+Or silent reload module (router)
+
+```js
+const path = require('path');
+const express = require("express");
+const app = express();
+const PORT = 8099;
+
+// Silent Reload module
+const requireWatcher = require("node-express-reload")('require-watcher');
+app.use('/home', requireWatcher( __dirname + '/home/index.js'))
+// or
+// app.use('/home', requireWatcher( __dirname + '/home/'))
+
+app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
+
 app.listen(PORT);
 ```
 

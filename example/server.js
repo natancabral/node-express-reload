@@ -26,8 +26,10 @@ app.use('/ner', require("node-express-reload")({
   depth: 10,
 }));
 
-// const requireWatcher = require("node-express-reload")('require-watcher-router');
-// app.use('/home', requireWatcher('./home/index.js'))
+// Another option (no restart process or application)
+// Silent Reload module
+// const requireWatcher = require("../index")('require-watcher');
+// app.use('/home', requireWatcher( __dirname + '/home/index.js'))
 
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
