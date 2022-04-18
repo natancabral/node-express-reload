@@ -62,16 +62,13 @@ Silent reload module (express router)
 const path = require('path');
 const express = require("express");
 const app = express();
+const requireWatcher = require("node-express-reload")('require-watcher');
 const PORT = 8099;
 
-// Silent Reload module
-const requireWatcher = require("node-express-reload")('require-watcher');
-app.use('/home', requireWatcher( __dirname + '/home/index.js'))
-// or
-// app.use('/home', requireWatcher( __dirname + '/home/'))
+// silent reload
+app.use('/home', requireWatcher( __dirname + '/home/index.js')) // or only '/home/'
 
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
-
 app.listen(PORT);
 ```
 
