@@ -91,7 +91,7 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
-## Init
+## Another resource to management
 
 - http://localhost:8080/ner
 - http://localhost:8080/any-another-word
