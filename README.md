@@ -29,7 +29,7 @@
 npm install node-express-reload
 ```
 
-## Example 1
+## Example 1 (restart server)
 
 [view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
 
@@ -52,7 +52,7 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
-## Example 2
+## Example 2 (without bringing down the server)
 
 [view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
 
@@ -72,7 +72,7 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
-## Example 3 (watcher files)
+## Example 3 (watcher files and restart server)
 
 [view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
 

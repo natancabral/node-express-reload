@@ -20,6 +20,8 @@
     "node",
     "nodemon",
     "node reload",
+    "express reload",
+    "node express reload",
     "restart",
     "kill",
     "reload"
