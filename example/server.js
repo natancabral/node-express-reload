@@ -26,6 +26,9 @@ app.use('/ner', require("node-express-reload")({
   depth: 10,
 }));
 
+// const requireWatcher = require("node-express-reload")('require-watcher-router');
+// app.use('/home', requireWatcher('./home/index.js'))
+
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 

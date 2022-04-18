@@ -1,5 +1,9 @@
 module.exports = function (settings) {
 
+  if(typeof settings === 'string' && settings === 'require-watcher') {
+    return require('./require-watcher');
+  }
+
   // Child Process
   const { exec } = require("child_process");
   // Cookie

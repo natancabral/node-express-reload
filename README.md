@@ -75,7 +75,7 @@ app.listen(PORT);
 </p>
 
 
-## Direct
+## GET Method
 ```
 GET http://localhost:8080/ner/reload/
 GET http://localhost:8080/ner/kill/
@@ -101,6 +101,10 @@ GET http://localhost:8080/ner/npm/i/pdfkit-table,cors
 | /**ner**/npm/ls | npm ls | http://localhost:8080/ner/npm/ls |
 | /**ner**/npm/audit | npm audit | http://localhost:8080/ner/npm/audit |
 | /**ner**/npm/install | npm install package.json | http://localhost:8080/ner/npm/install |
+
+## Options
+
+Soon.
 
 ## License
 
