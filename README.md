@@ -60,7 +60,10 @@ app.listen(PORT);
 ## Screens
 
 <p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/signin.png" alt="node-express-reload (Natan Cabral)"/>
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/signin2.png" alt="node-express-reload (Natan Cabral)"/>
+</p>
+<p align="center">
+  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/hi.png" alt="node-express-reload (Natan Cabral)"/>
 </p>
 <p align="center">
   <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/help.png" alt="node-express-reload (Natan Cabral)"/>
