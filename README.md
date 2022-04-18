@@ -7,10 +7,10 @@
 </p>
 
 # node-express-reload
-#### Install NPM package online, kill process and reload server (hosting and cloud)
-`WARNING: Do not use the development server in a production environment.`
-Reload express.js server. Kill process or port, reload server and, if you need, install new packages NPM. *No need terminal shell or SSH*.
+#### Reload application server (hosting and cloud), kill process and install NPM packages online
 
+- Helps to refresh your application after changes
+- Automaticly reload your express.js server without bringing down the server
 - Reload server
 - Kill process
 - Kill port
@@ -18,6 +18,8 @@ Reload express.js server. Kill process or port, reload server and, if you need, 
 - Install new packages (get method)
 - List, fix and audit
 
+
+`WARNING: Do not use the development server in a production environment.`
 
 ## Install [<img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-tile.png">](https://www.npmjs.com/package/node-express-reload)
 
@@ -27,6 +29,8 @@ npm install node-express-reload
 
 ## Example
 
+[view pdf example](https://github.com/natancabral/node-express-reload/tree/main/example)
+
 ```js
 const express = require("express");
 const app = express();
@@ -35,11 +39,12 @@ const PORT = 8080;
 // ** Secure Change **
 // ** change name /ner to /any-another-word **
 app.use('/ner', require("node-express-reload")({
-  username: 'admin', // optional (if not defined your username is admin)
+  username: 'admin', // if not defined, your username will be admin
   password: '&HSN15KQi!Ç', // required
   application: app, // application express
   serverfile: __filename, // ./index.js or ./server.js. call on restart
   // pwcache: 7, // password cache in minutes
+  // watcher: []
 }));
 
 // app.use(express.static(path.join(__dirname, "public")));
@@ -47,7 +52,8 @@ app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
 ```
 
-## Terminal
+## Init
+
 - http://localhost:8080/ner
 - http://localhost:8080/any-another-word
 
@@ -65,12 +71,9 @@ app.listen(PORT);
 <p align="center">
   <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
 </p>
-<p align="center">
-  <img src="https://github.com/natancabral/node-express-reload/blob/main/public/images/npm-ls.png" alt="node-express-reload (Natan Cabral)"/>
-</p>
 
 
-## Samples
+## Direct
 ```
 GET http://localhost:8080/ner/reload/
 GET http://localhost:8080/ner/kill/

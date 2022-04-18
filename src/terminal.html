@@ -310,6 +310,7 @@
             .replace(/[\n\r\t]/g,' ')
             .replace(/\s\s\s/g,' ')
             .replace(/\s\s/g,' ')
+            .replace(/\//g,'|') // replace slash name package
             .trim();
             if(!v) return null;
             v = v.split(' ').join(',');
@@ -327,6 +328,7 @@
             .replace(/[\n\r\t]/g,' ')
             .replace(/\s\s\s/g,' ')
             .replace(/\s\s/g,' ')
+            .replace(/\//g,'|') // replace slash name package
             .trim();
             if(!v) return null;
             v = v.split(' ').join(',');

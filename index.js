@@ -19,6 +19,7 @@ module.exports = function (settings) {
   neruservar || (neruservar = 'ner_user_auth');
   storage || (storage = 'cookie'); // session
   username || (username = 'admin');
+  application = router;
 
   // // set
   // res.cookie(cookie_name, 'value', {
@@ -49,6 +50,8 @@ module.exports = function (settings) {
     );
   }
   
+  const HTML_PRE = `"<html><pre>`;
+
   const SECURE_MESSAGE = `
     Change your password. 
     <li>uppercase</li> 
@@ -58,24 +61,8 @@ module.exports = function (settings) {
     <li>6 length</li> 
   `;
 
-  const SECURE_PROMPT_HTML = `
-    <script type="text/javascript">
-      var password = window.prompt("Enter KEY");
-      // send post value
-    </script>
-  `;
-
   // check pw strong
   const checkPassWord = (p) => p.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/);
-
-  // Asking for the authorization
-  function authSimple(req, res, next) {
-    if (checkPassWord(key)) {
-      res.send(SECURE_PROMPT_HTML);
-    } else {
-      res.send(SECURE_MESSAGE);
-    }
-  }
 
   // Asking for the authorization
   function auth(req, res, next) {
@@ -125,7 +112,7 @@ module.exports = function (settings) {
       // Check user and pass
       if (usernameAUTH === username && passwordAUTH === password) {
         // Storage
-        // -----------------------------------------
+        // ----------------------------------------------------------
         if(storage === 'cookie') {
           res.cookie(`${neruservar}`, username, {
             path: '/ner',
@@ -138,7 +125,7 @@ module.exports = function (settings) {
           // console.log('Entrou(2)');
           req.session[neruservar] = username;
         }
-        // -----------------------------------------
+        // ----------------------------------------------------------
         console.log('Authenticate');
         next();
       } else {
@@ -150,8 +137,31 @@ module.exports = function (settings) {
       return noAuthenticate();
     }
   }
+
+  function execScript(scrpt) {
+    return new Promise((resolve, reject) => {
+      try {
+        exec(scrpt, (error, stdout, stderr) => {
+          if (error instanceof Error) {
+            console.error(error);
+            //throw new Error(error);
+            reject(error);
+          }
+          console.log("stdout:\n", stdout);
+          console.log("stderr:\n", stderr);
+          let output = stdout + stderr;
+          resolve(output);
+        });            
+      } catch (error) {
+        reject(error);        
+      }
+    });
+  }
+
+  // refresh
+  // res.redirect(req.get('referer'));
+  // https://www.npmjs.com/package/chokidar
     
-  // welcome
   router.get("/", auth, (req, res) => {
     // console.log(req.baseUrl);
     // res.send("👋 HI, Welcome node-express-reload.");
@@ -159,18 +169,16 @@ module.exports = function (settings) {
   });
 
   router.get("/pid", (req, res) => {
-    res.send(`PID ${process.pid}`);
+    res.send(`${process.pid}`);
   });
 
   router.get("/dirname", (req, res) => {
-    res.send(`PID ${__dirname}`);
+    res.send(`${__dirname}`);
   });
 
   router.get("/logout", (req, res) => {
-
     res.setHeader("WWW-Authenticate", "Basic"); // realm="Access to the staging site", charset="UTF-8"
     res.status(401);
-
     if(storage === 'cookie') {
       // Clear cookie
       res.cookie(neruservar, '', { path: '/ner', maxAge: 1, expires: Date.now(0), overwrite: true, httpOnly: true });
@@ -182,13 +190,7 @@ module.exports = function (settings) {
       // req.session.destroy();  
       // req.logout();
     }
-
     res.send("Logout. 👋 Clear all cookies and session.");
-  });
-
-  // init securety
-  router.get("/secure", authSimple, (req, res) => {
-    res.send("Secure - Simple Authentication.");
   });
 
   router.get("/kill-port/:port", auth, function (req, res) {
@@ -227,80 +229,35 @@ module.exports = function (settings) {
     const pid = req.params.pid || process.pid;
     console.log(`Reload pid ${pid}`);
     try {
-      // usar spawn
       exec(`kill -9 ${pid} && node ${serverfile}`);
     } catch (error) {
       console.log(error);
+      res.send(`${error}`);
     }
     return res.send(`Reload pid ${pid}`);
   });
 
-  router.get("/list", auth, function (req, res) {
-    let out = "";
-    exec("ps -aef | grep 'node'", (e, stdout, stderr) => {
-      if (e instanceof Error) {
-        console.error(e);
-        //throw e;
-      }
-      console.log("stdout:\n", stdout);
-      console.log("stderr:\n", stderr);
-
-      out += stdout;
-      out += stderr;
-
-      exec("lsof -i", (e, stdout, stderr) => {
-        if (e instanceof Error) {
-          console.error(e);
-          //throw e;
-        }
-        console.log("stdout:\n", stdout);
-        console.log("stderr:\n", stderr);
-
-        out += stdout;
-        out += stderr;
-
-        res.send("<html><pre>" + out);
-      });
-    });
+  router.get("/list", auth, async function (req, res) {
+    let output = "";
+    output += await execScript("ps -aef | grep 'node'");
+    res.send(HTML_PRE + output)
   });
 
-  // https://expressjs.com/en/guide/routing.html
+  router.get("/list-all", auth, async function (req, res) {
+    let output = "";
+    output += await execScript("ps -aef");
+    output += await execScript("lsof -i");
+    res.send(HTML_PRE + output)
+  });
 
-  function listall(req, res) {
-    let out = "";
-    exec("ps -aef", (e, stdout, stderr) => {
-      if (e instanceof Error) {
-        console.error(e);
-        //throw e;
-      }
-      console.log("stdout:\n", stdout);
-      console.log("stderr:\n", stderr);
-
-      out += stdout;
-      out += stderr;
-
-      exec("lsof -i", (e, stdout, stderr) => {
-        if (e instanceof Error) {
-          console.error(e);
-          //throw e;
-        }
-        console.log("stdout:\n", stdout);
-        console.log("stderr:\n", stderr);
-
-        out += stdout;
-        out += stderr;
-
-        res.send("<html><pre>" + out);
-      });
-    });
-  }
-
-  router.get("/list-all", auth, listall);
-  router.get("/listall", auth, listall);
-
-  router.get("/npm/:type/:list", auth, function (req, res) {
+  router.get("/npm/:type/:list", auth, async function (req, res) {
     const list = String(req.params.list)
-      .replace(/\|/g, "/")
+      .replace(/[\n\r\t]/g, '') // scape
+      .replace(/[\'\"\`]/g, '') // scape
+      .replace(/\&/g, '') // scape
+      .replace(/\:/g, '') // scape
+      .replace(/\-\-/g,'') // scape
+      .replace(/\|/g, '/')
       .split(",")
       .join(" ");
 
@@ -308,7 +265,7 @@ module.exports = function (settings) {
       req.params.type === "u"
         ? "uninstall"
         : req.params.type === "i"
-        ? "i"
+        ? "install"
         : false;
 
     if (!type || list.length < 4) {
@@ -316,93 +273,33 @@ module.exports = function (settings) {
       return;
     }
 
-    let out = "";
     const scrpt = `npm ${type} ${list}`;
-    exec(scrpt, (e, stdout, stderr) => {
-      if (e instanceof Error) {
-        console.error(e);
-        //throw e;
-      }
-      console.log("stdout:\n", stdout);
-      console.log("stderr:\n", stderr);
-
-      out += stdout;
-      out += stderr;
-
-      res.send("<html><pre>" + out);
-    });
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
   });
 
-  router.get("/npm/fix", auth, function (req, res) {
-    let out = "";
+  router.get("/npm/fix", auth, async function (req, res) {
     const scrpt = `npm audit fix`;
-    exec(scrpt, (e, stdout, stderr) => {
-      if (e instanceof Error) {
-        console.error(e);
-        //throw e;
-      }
-      console.log("stdout:\n", stdout);
-      console.log("stderr:\n", stderr);
-
-      out += stdout;
-      out += stderr;
-
-      res.send("<html><pre>" + out);
-    });
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
   });
 
-  router.get("/npm/install", auth, function (req, res) {
-    let out = "";
+  router.get("/npm/install", auth, async function (req, res) {
     const scrpt = `npm install`;
-    exec(scrpt, (e, stdout, stderr) => {
-      if (e instanceof Error) {
-        console.error(e);
-        //throw e;
-      }
-      console.log("stdout:\n", stdout);
-      console.log("stderr:\n", stderr);
-
-      out += stdout;
-      out += stderr;
-
-      res.send("<html><pre>" + out);
-    });
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
   });
 
-  router.get("/npm/ls", auth, function (req, res) {
-    let out = "";
+  router.get("/npm/ls", auth, async function (req, res) {
     const scrpt = `npm ls`;
-    exec(scrpt, (e, stdout, stderr) => {
-      if (e instanceof Error) {
-        console.error(e);
-        //throw e;
-      }
-      console.log("stdout:\n", stdout);
-      console.log("stderr:\n", stderr);
-
-      out += stdout;
-      out += stderr;
-
-      res.send("<html><pre>" + out);
-    });
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
   });
 
-  router.get("/npm/audit", auth, function (req, res) {
-    let out = "";
+  router.get("/npm/audit", auth, async function (req, res) {
     const scrpt = `npm audit`;
-    exec(scrpt, (e, stdout, stderr) => {
-      if (e instanceof Error) {
-        console.error(e);
-        //throw e;
-      }
-      console.log("stdout:\n", stdout);
-      console.log("stderr:\n", stderr);
-
-      out += stdout;
-      out += stderr;
-
-      res.send("<html><pre>" + out);
-    });
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
   });
 
   return router;

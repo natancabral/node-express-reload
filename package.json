@@ -1,10 +1,11 @@
 {
   "name": "node-express-reload",
-  "version": "0.0.112",
-  "description": "Restart express.js server. Kill process or port, reload server and, if you need, install new packages NPM. No need terminal shell or SSH. Kill process; Kill port; Restart server; Install new packages; List pid processes; ",
+  "version": "0.1.2",
+  "description": "Helps to refresh your application after changes. Reload application server (hosting and cloud), kill process and install NPM packages online",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "git-push": "git add . && git commit -m 'update' && git push "
   },
   "repository": {
     "type": "git",
