@@ -1,3 +1,5 @@
 /node_modules
+/node_modules_win
+/node_modules_unix
 /local-example
 .idea

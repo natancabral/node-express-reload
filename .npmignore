@@ -1,6 +1,8 @@
+/node_modules
+/node_modules_win
+/node_modules_unix
 .git
 .idea
 local-example
 public
-node_modules
 example
