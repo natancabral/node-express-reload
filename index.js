@@ -3,7 +3,8 @@ module.exports = function (settings) {
   if(typeof settings === 'string' && settings === 'require-watcher') {
     return require('./require-watcher');
   }
-
+  // OS
+  const os = require('os');
   // Child Process
   const { exec } = require("child_process");
   // Cookie
@@ -20,10 +21,15 @@ module.exports = function (settings) {
   // Router
   const router = express.Router();
   const path = require('path');
-  
-  let { username, password, application, pwcache, production, serverfile, neruservar, storage, removeterminal, watcher, depth } = settings;
+  // Kill process
+  const { kill, killer } = require('cross-port-killer');
 
-  serverfile || (serverfile = "index.js");
+  // Variables
+  let { username, password, application, pwcache, production, serverfile, neruservar, storage, removeterminal, watcher, depth, port } = settings;
+  let watcherlive = null;
+
+  // Validate
+  serverfile || (serverfile = 'index.js');
   pwcache || (pwcache = 1); // 1h
   neruservar || (neruservar = 'ner_user_auth');
   storage || (storage = 'cookie'); // cookie | session | memory
@@ -32,8 +38,10 @@ module.exports = function (settings) {
   watcher || (watcher = null);
   // production || (process.env.NODE_ENV)
 
-  let watcherlive = null;
-
+  // Storage
+  // - cookie
+  // - session
+  // - momey 
   if(storage === 'cookie') {
     // Use Cookie
     application.use(
@@ -44,7 +52,7 @@ module.exports = function (settings) {
     application.use(
       session({
         path: '/ner',
-        name: "session-ner-name",
+        name: "session-nerw-name",
         secret: "session-ner-key", // Secret key,
         saveUninitialized: false,
         resave: false,
@@ -55,24 +63,31 @@ module.exports = function (settings) {
     );
   }
   
-  const HTML_PRE = `"<html><pre>`;
+  // Base HTML <pre>
+  const HTML_PRE = '<html><pre>';
 
-  // check pw strong
+  // ----------------------------------------------------------------
+  // Authentication
+  // ----------------------------------------------------------------
+
+  // Check pw strong
   const checkPassWord = (p) => p.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/);
 
   // Asking for the authorization
   function auth(req, res, next) {
     
+    // No password
     if(!password) {
       const err = 'Set password on node-express-load package. \nhttps://www.npmjs.com/package/node-express-reload';
-      res.send(`<pre>Error: ${err}`)
+      res.send(`${HTML_PRE}Error: ${err}`)
       // throw new Error(err);
       return;
     }
 
+    // Bad password
     if(!checkPassWord(password)) {
       const err = `Change your password. \n- uppercase\n- lowercase\n- number\n- special character\n- 6 length`;
-      res.send(`<pre>Error: ${err}`)
+      res.send(`${HTML_PRE}Error: ${err}`)
       // throw new Error(err);
       return;
     }
@@ -84,30 +99,30 @@ module.exports = function (settings) {
     //   req.headers
     // )
 
+    // Get values authorization
     const getData = () => {
-      const authHeader = req.headers.authorization;
-      return authHeader ? new Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':') : ['', ''];
+      const {authorization} = req.headers;
+      return authorization ? new Buffer.from(authorization.split(' ')[1], 'base64').toString().split(':') : ['', ''];
     }
 
+    // Open dialog
     const noAuthenticate = () => {
       console.log('Unauthorized');
       res.setHeader("WWW-Authenticate", "Basic")
       res.sendStatus(401);
     } 
 
-    let userSTORAGE;
-    
+    // Get user from storage
+    let userSTORAGE;    
     if(storage === 'cookie') {
       userSTORAGE = req.cookies[neruservar];
-      // console.log('cookie', userSTORAGE);
     } else {
       userSTORAGE = req.session[neruservar];
-      // console.log('session', userSTORAGE);
     }
 
-    // Checking for the authorization
+    // Checking authorization
     if (userSTORAGE === username) {
-      // Allow
+      // Allowed :))
       next();
     } else if (!userSTORAGE) {
       // Get headers authorization
@@ -115,21 +130,17 @@ module.exports = function (settings) {
       // Check user and pass
       if (usernameAUTH === username && passwordAUTH === password) {
         // Storage
-        // ----------------------------------------------------------
         if(storage === 'cookie') {
+          // Cookie
           res.cookie(`${neruservar}`, username, {
             path: '/ner',
-            // maxAge: 1000 * 60 * 60 * pwcache, // 1 hour
             maxAge: 1000 * 60 * pwcache, // 1 min
-            // overwrite: true,
-            // httpOnly: true,
           });
         } else {
-          // console.log('Entrou(2)');
+          // Session
           req.session[neruservar] = username;
         }
-        // ----------------------------------------------------------
-        console.log('Authenticate');
+        // Allowed :))
         next();
       } else {
         // Ops :(
@@ -141,6 +152,7 @@ module.exports = function (settings) {
     }
   }
 
+  // Run script
   function execScript(scrpt) {
     return new Promise((resolve, reject) => {
       try {
@@ -149,12 +161,11 @@ module.exports = function (settings) {
             console.error(error);
             //throw new Error(error);
             reject(error);
-            return;
+          } else {
+            // console.log("stdout:\n", stdout);
+            // console.log("stderr:\n", stderr);
+            resolve(stdout + stderr);
           }
-          console.log("stdout:\n", stdout);
-          console.log("stderr:\n", stderr);
-          let output = stdout + stderr;
-          resolve(output);
         });            
       } catch (error) {
         reject(error);        
@@ -162,18 +173,248 @@ module.exports = function (settings) {
     });
   }
 
-      // watcher.close().then(() => console.log('closed'));
+  // Routers
+  // ----------------------------------------------------------------
+
+  // refresh
+  // res.redirect(req.get('referer'));
+  // https://www.npmjs.com/package/chokidar
+  
+  // Terminal
+  router.get("/", auth, (req, res) => {
+    // req.baseUrl;
+    if(removeterminal === true) {
+      res.send("👋 HI, Welcome node-express-reload.");
+    } else {
+      res.sendFile( __dirname + '/src/terminal.html');
+    }
+  });
+
+  // List sessions and cookies
+  router.get("/sessions", auth, function(req, res){
+    console.log(req.session);
+    res.send({ session: req.session || {}, cookie: req.cookies || {} });
+  });
+
+  // Post
+  router.get("/port", (req, res) => {
+    res.send(`${req.socket.localPort}`);
+  });
+
+  // PID
+  router.get("/pid", (req, res) => {
+    res.send(`${process.pid}`);
+  });
+
+  // __dirname
+  router.get("/dirname", auth, (req, res) => {
+    res.send(`${__dirname}`);
+  });
+
+  // Logout
+  router.get("/logout", (req, res) => {
+    res.setHeader("WWW-Authenticate", "Basic"); // realm="Access to the staging site", charset="UTF-8"
+    res.status(401);
+    if(storage === 'cookie') {
+      // Clear cookie
+      res.cookie(neruservar, '', { path: '/ner', maxAge: 1, expires: Date.now(0), overwrite: true, httpOnly: true });
+      res.clearCookie(neruservar);
+    } else {
+      // Clear session
+      req.session[neruservar] = null;
+      delete req.session[neruservar];
+    }
+    res.send("Logout. 👋 Clear all cookies and session.");
+  });
+
+  // Destroy all
+  router.get("/destroy", auth, (req, res) => {
+    try {
+      // Destroy cookies
+      if(req.cookies){
+        for(const name in req.cookies) {
+          res.clearCookie(name);
+        }  
+      }
+      // Destroy sessions
+      if(req.session){
+        req.session.cookie.expires = Date.now();
+        req.session.cookie.maxAge = 0;
+        req.session.destroy();
+      }
+      // Remove autehntication
+      res.setHeader("WWW-Authenticate", "Basic"); // realm="Access to the staging site", charset="UTF-8"
+      res.status(401);
+      // Message
+      res.send("Destroy all cookies and session.");
+    } catch (error) {
+      res.send("Ops. :(");      
+    }
+  });
+  
+  // Kill port
+  router.get("/kill-port/:port?", auth, function (req, res) {
+    // import exec method from child_process module
+    const port = req.params.port || req.socket.localPort;
+    console.log(`Killing port ${port}`);
+    // Unix
+    exec(`npx kill-port ${port}`);
+    return res.send(`Port ${port}`);
+  });
+
+  // 1
+  // https://www.npmjs.com/package/cross-port-killer
+  // 2
+  // https://www.npmjs.com/package/tree-kill
+
+  // Kill PID
+  router.get("/kill/:pid?", auth, function (req, res) {
+    // import exec method from child_process module
+    const pid = req.params.pid || process.pid;
+	  let script = '';
+    console.log(`Killing pid ${pid}`);
+
+    killer.killByPids([pid]).then(() => console.log('done')).catch(err => {
+
+      // 'aix', 'darwin', 'freebsd','linux', 'openbsd', 'sunos', and 'win32'
+      switch(os.platform()) {
+        case 'win32':
+          script = `Taskkill /F /PID ${pid}`; break;
+        default:
+          script = `kill -9 ${pid}`; break;
+      }
+        
+      execScript(script);
+
+    });
+
+    req.params.pid || process.exit();
+    return res.send(`Kill pid ${pid}`);
+  });
+
+  // path.basename('/foo/bar/baz/asdf/file.html'); // out: file.html
+
+  // Message:
+  // Incomplete response received from application
+  // Solution:
+  // usar spawn
+
+  // Reload PID
+  router.get("/reload/:pid?", auth, async function (req, res) {
+    // import exec method from child_process module
+    const pid = req.params.pid || process.pid;
+  	let script = '';
+    console.log(`Reload pid ${pid}`);
+
+    // 'aix', 'darwin', 'freebsd','linux', 'openbsd', 'sunos', and 'win32'
+  	switch(os.platform()) {
+      case 'win32': script = `Taskkill /F /PID ${pid} 1>2 & node ${serverfile}`; break;
+      default:      script = `kill -9 ${pid} && node ${serverfile}`;
+  	}
+
+    execScript(script);
+    return res.send( script ? `Reload pid ${pid}` : `Ops!` );
+  });
+
+  // List process
+  router.get("/list", auth, async function (req, res) {
+    let output = "";
+	  let script = '';
+    // 'aix', 'darwin', 'freebsd','linux', 'openbsd', 'sunos', and 'win32'
+	  switch(os.platform()) {
+      case 'win32': script = `tasklist /NH | findstr /I node`; break;
+      default:      script = `ps -aef | grep 'node'`;
+	  }
+    output += await execScript(script);
+    res.send(HTML_PRE + output)
+  });
+
+  // List all processes
+  router.get("/list-all", auth, async function (req, res) {
+    let output = "";
+    // 'aix', 'darwin', 'freebsd','linux', 'openbsd', 'sunos', and 'win32'
+	  switch(os.platform()) {
+      case 'win32': output += await execScript("tasklist /NH");	 break;
+      default:      output += await execScript("ps -aef");
+		                output += await execScript("lsof -i"); 
+	}
+    res.send(HTML_PRE + output)
+  });
+
+  // NPM install and uninstall
+  router.get("/npm/:type/:list", auth, async function (req, res) {
+    const list = String(req.params.list)
+      .replace(/[\n\r\t]/g, '') // scape
+      .replace(/[\'\"\`]/g, '') // scape
+      .replace(/\&/g, '') // scape
+      .replace(/\:/g, '') // scape
+      .replace(/\-\-/g,'') // scape
+      .replace(/\|/g, '/')
+      .split(",")
+      .join(" ");
+
+    let type =
+      req.params.type === "u"
+        ? "uninstall"
+        : req.params.type === "i"
+        ? "install"
+        : false;
+
+    if (!type || list.length < 4) {
+      res.send("Error");
+      return;
+    }
+
+    const scrpt = `npm ${type} ${list}`;
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
+  });
+
+  // NPM fix
+  router.get("/npm/fix", auth, async function (req, res) {
+    const scrpt = `npm audit fix`;
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
+  });
+
+  // NPM install package.json
+  router.get("/npm/install", auth, async function (req, res) {
+    const scrpt = `npm install`;
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
+  });
+
+  // NPM ls
+  router.get("/npm/ls", auth, async function (req, res) {
+    const scrpt = `npm ls`;
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
+  });
+
+  // NPM audit
+  router.get("/npm/audit", auth, async function (req, res) {
+    const scrpt = `npm audit`;
+    const output = await execScript(scrpt);
+    res.send(HTML_PRE + output)
+  });
+
+  // ----------------------------------------------------------------
+  // Watcher
+  // ----------------------------------------------------------------
+
+  // Watcher - Close
   function watchClose() {
     // Stop watching.
     // The method is async!
     watcherlive && watcherlive.close().then(() => console.log('closed'));
   }
 
-  (function() {
+  // Watcher - Start
+  (function(wtch) {
 
-    if(!watcher) return;
+    if(!wtch) return;
 
-    let dir = Array.isArray(watcher) ? watcher : [ String(watcher) ];
+    let dir = Array.isArray(wtch) ? wtch : [ String(wtch) ];
 
     watcherlive = chokidar.watch(dir, {
       ignored: /(^|[\/\\])\../, // ignore dotfiles
@@ -206,81 +447,20 @@ module.exports = function (settings) {
     // argument when available: https://nodejs.org/api/fs.html#fs_class_fs_stats
     watcherlive.on('change', (path, stats) => {
       if (stats) console.log(`File ${path} changed size to ${stats.size}`);
-      exec(`kill -9 ${process.pid} && node ${serverfile}`);
+
+      switch(os.platform()) {
+        case 'win32': script = `Taskkill /F /PID ${process.pid}`; break;
+        default:      script = `kill -9 ${process.pid} && node ${serverfile}`;
+      }
+
+      execScript(script);
+      process.exit();
     });
 
-  })();
+  })(watcher);
 
-  // watcher && watchAll(watcher);
-  // watcher && router.use(watchDir( Array.isArray(watcher) ? watcher[0] : watcher ));
-
-  // refresh
-  // res.redirect(req.get('referer'));
-  // https://www.npmjs.com/package/chokidar
-    
-  router.get("/", auth, (req, res) => {
-    // console.log(req.baseUrl);
-    if(removeterminal === true) {
-      res.send("👋 HI, Welcome node-express-reload.");
-    } else {
-      res.sendFile( __dirname + '/src/terminal.html');
-    }
-  });
-
-  router.get("/sessions", auth, function(req, res){
-    console.log(req.session);
-    res.send({ session: req.session || {}, cookie: req.cookies || {} });
-  });
-
-  router.get("/pid", (req, res) => {
-    res.send(`${process.pid}`);
-  });
-
-  router.get("/dirname", auth, (req, res) => {
-    res.send(`${__dirname}`);
-  });
-
-  router.get("/logout", (req, res) => {
-    res.setHeader("WWW-Authenticate", "Basic"); // realm="Access to the staging site", charset="UTF-8"
-    res.status(401);
-    if(storage === 'cookie') {
-      // Clear cookie
-      res.cookie(neruservar, '', { path: '/ner', maxAge: 1, expires: Date.now(0), overwrite: true, httpOnly: true });
-      res.clearCookie(neruservar);
-    } else {
-      // Clear session
-      req.session[neruservar] = null;
-      delete req.session[neruservar];
-    }
-    res.send("Logout. 👋 Clear all cookies and session.");
-  });
-
-  router.get("/destroy", auth, (req, res) => {
-    try {
-
-      // Destroy cookies
-      if(req.cookies){
-        for(const name in req.cookies) {
-          res.clearCookie(name);
-        }  
-      }
-
-      // Destroy sessions
-      if(req.session){
-        req.session.cookie.expires = Date.now();
-        req.session.cookie.maxAge = 0;
-        req.session.destroy();
-      }
-
-      // Remove autehntication
-      res.setHeader("WWW-Authenticate", "Basic"); // realm="Access to the staging site", charset="UTF-8"
-      res.status(401);
-
-      res.send("Destroy all cookies and session.");
-    } catch (error) {
-      res.send("Ops. :(");      
-    }
-  });
+  // Routers
+  // ----------------------------------------------------------------
 
   router.get("/watcher/:close?", auth, (req, res) => {
     const {close} = req.params || {};
@@ -294,116 +474,6 @@ module.exports = function (settings) {
         res.send(`No have watcher list.`);
       }
     }
-  });
-  
-
-  router.get("/kill-port/:port", auth, function (req, res) {
-    // import exec method from child_process module
-    const port = req.params.port >> 0;
-    console.log(`Killing port ${port}`);
-    exec(`npx kill-port ${port}`);
-    return res.send(`Port ${port}`);
-  });
-
-  router.get("/reload-port/:port", auth, function (req, res) {
-    // import exec method from child_process module
-    const port = req.params.port >> 0;
-    console.log(`reload port ${port}`);
-    exec(`npx kill-port ${port} && node ${serverfile}`);
-    return res.send(`Reload ${port}`);
-  });
-
-  router.get("/kill/:pid?", auth, function (req, res) {
-    // import exec method from child_process module
-    const pid = req.params.pid || process.pid;
-    console.log(`Killing pid ${pid}`);
-    exec(`kill -9 ${pid}`);
-    return res.send(`Kill pid ${pid}`);
-  });
-
-  // path.basename('/foo/bar/baz/asdf/file.html'); // out: file.html
-
-  // Message:
-  // Incomplete response received from application
-  // Solution:
-  // usar spawn
-
-  router.get("/reload/:pid?", auth, function (req, res) {
-    // import exec method from child_process module
-    const pid = req.params.pid || process.pid;
-    console.log(`Reload pid ${pid}`);
-    try {
-      exec(`kill -9 ${pid} && node ${serverfile}`);
-    } catch (error) {
-      console.log(error);
-      res.send(`${error}`);
-    }
-    return res.send(`Reload pid ${pid}`);
-  });
-
-  router.get("/list", auth, async function (req, res) {
-    let output = "";
-    output += await execScript("ps -aef | grep 'node'");
-    res.send(HTML_PRE + output)
-  });
-
-  router.get("/list-all", auth, async function (req, res) {
-    let output = "";
-    output += await execScript("ps -aef");
-    output += await execScript("lsof -i");
-    res.send(HTML_PRE + output)
-  });
-
-  router.get("/npm/:type/:list", auth, async function (req, res) {
-    const list = String(req.params.list)
-      .replace(/[\n\r\t]/g, '') // scape
-      .replace(/[\'\"\`]/g, '') // scape
-      .replace(/\&/g, '') // scape
-      .replace(/\:/g, '') // scape
-      .replace(/\-\-/g,'') // scape
-      .replace(/\|/g, '/')
-      .split(",")
-      .join(" ");
-
-    let type =
-      req.params.type === "u"
-        ? "uninstall"
-        : req.params.type === "i"
-        ? "install"
-        : false;
-
-    if (!type || list.length < 4) {
-      res.send("Error");
-      return;
-    }
-
-    const scrpt = `npm ${type} ${list}`;
-    const output = await execScript(scrpt);
-    res.send(HTML_PRE + output)
-  });
-
-  router.get("/npm/fix", auth, async function (req, res) {
-    const scrpt = `npm audit fix`;
-    const output = await execScript(scrpt);
-    res.send(HTML_PRE + output)
-  });
-
-  router.get("/npm/install", auth, async function (req, res) {
-    const scrpt = `npm install`;
-    const output = await execScript(scrpt);
-    res.send(HTML_PRE + output)
-  });
-
-  router.get("/npm/ls", auth, async function (req, res) {
-    const scrpt = `npm ls`;
-    const output = await execScript(scrpt);
-    res.send(HTML_PRE + output)
-  });
-
-  router.get("/npm/audit", auth, async function (req, res) {
-    const scrpt = `npm audit`;
-    const output = await execScript(scrpt);
-    res.send(HTML_PRE + output)
   });
 
   return router;

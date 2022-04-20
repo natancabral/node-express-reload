@@ -29,7 +29,7 @@
 npm install node-express-reload
 ```
 
-## Example 1
+## Example 1 (reloaded manually)
 
 [view code example](https://github.com/natancabral/node-express-reload/tree/main/example)
 
@@ -49,8 +49,9 @@ app.use('/ner', require("node-express-reload")({
 // Open options 
 // http://localhost:8080/ner/
 // http://localhost:8080/any-another-word/
-// Manual reload 
+// Reloaded manually
 // http://localhost:8080/ner/reload/
+// http://localhost:8080/any-another-word/reload
 
 app.get("/", (req, res) => res.send(`I'm pid ${process.pid} and port ${PORT}`));
 app.listen(PORT);
@@ -63,11 +64,10 @@ app.listen(PORT);
 Silent reload module (express router)
 
 ```js
-const path = require('path');
 const express = require("express");
 const app = express();
 const requireWatcher = require("node-express-reload")('require-watcher');
-const PORT = 8099;
+const PORT = 8080;
 
 // silent reload
 app.use('/home', requireWatcher( __dirname + '/home/index.js')) // or only '/home/'
@@ -97,6 +97,7 @@ app.listen(PORT);
 
 ## Another resource to management
 
+- Example 1
 - http://localhost:8080/ner
 - http://localhost:8080/any-another-word
 
