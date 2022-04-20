@@ -42,7 +42,7 @@ const PORT = 8080;
 // ** change route /ner to /any-another-word **
 app.use('/ner', require("node-express-reload")({
   username: 'admin', // if not defined, your username will be admin
-  password: '&HSN15KQi!Ç',
+  password: 'NeR777#',
   serverfile: __filename,
 }));
 

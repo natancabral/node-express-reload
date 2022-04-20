@@ -18,7 +18,7 @@ const PORT = 8099;
 // ** change route /ner to /any-another-word **
 app.use('/ner', require("node-express-reload")({
   username: 'admin', // if not defined, your username will be admin
-  password: '&HSN15KQi!Ç', // required
+  password: 'NeR777#x', // required
   serverfile: __filename, // ./index.js or ./server.js. call on restart
   // pwcache: 12, // password cache in minutes
   // storage: 'session', // cookie, session, memory 
