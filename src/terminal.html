@@ -409,7 +409,7 @@
             try {
               messageSuccess(xhr.responseText);
             } catch (error) {
-              messageError(error);
+              messageError(`[200] ${error}`);
             }
           } else {
             if((value.match(/relaod/gi) || value.match(/kill/gi)) && String(xhr.responseText).toLowerCase().match(/incomplete response received from application/gi)) {
