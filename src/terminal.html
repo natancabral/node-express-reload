@@ -405,17 +405,23 @@
       xhr.open("GET", `${baseUrl}/${value}`, true);
       xhr.onload = function (e) {
         if (xhr.readyState === 4) {
+          let res = '';
+          try {
+            res = xhr.responseText.replace(/(?:<style.+?>.+?</style>|<script.+?>.+?</script>|<(?:!|/?[a-zA-Z]+).*?/?>)/gi, '');
+          } catch (error) {
+            res = xhr.responseText.replace(/(<([^>]+)>)/gi, '');
+          }
           if (xhr.status === 200) {
             try {
-              messageSuccess(xhr.responseText);
+              messageSuccess(res);
             } catch (error) {
               messageError(`[200] ${error}`);
             }
           } else {
-            if((value.match(/relaod/gi) || value.match(/kill/gi)) && String(xhr.responseText).toLowerCase().match(/incomplete response received from application/gi)) {
+            if(xhr.status >= 500 && xhr.status <= 503) {
               messageError('Goodbye 👋 (maybe reload)');
             } else {
-              messageError(`[state:${xhr.readyState}][status:${xhr.status}] ${xhr.responseText}`);
+              messageError(`[state:${xhr.readyState}] [status:${xhr.status}] ${res}`);
             }
           }
           inputdisabled(false);
