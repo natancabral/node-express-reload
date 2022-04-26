@@ -405,12 +405,7 @@
       xhr.open("GET", `${baseUrl}/${value}`, true);
       xhr.onload = function (e) {
         if (xhr.readyState === 4) {
-          let res = '';
-          try {
-            res = xhr.responseText.replace(/(?:<style.+?>.+?</style>|<script.+?>.+?</script>|<(?:!|/?[a-zA-Z]+).*?/?>)/gi, '');
-          } catch (error) {
-            res = xhr.responseText.replace(/(<([^>]+)>)/gi, '');
-          }
+          let res = xhr.responseText.replace(/(<([^>]+)>)/gi, '');
           if (xhr.status === 200) {
             try {
               messageSuccess(res);
