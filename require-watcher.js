@@ -22,6 +22,9 @@ module.exports = function(dir){
       })
     })
   })
+  // achei em tutorial
+  // delete require.cache[require.resolve('./my-module')];
+  // const localId = id.substr(process.cwd().length);
   require(dir);
   return function(req, res, next) {
     console.log('require hot reload')

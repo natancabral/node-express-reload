@@ -153,10 +153,10 @@ module.exports = function (settings) {
   }
 
   // Run script
-  function execScript(scrpt) {
+  function execScript(script) {
     return new Promise((resolve, reject) => {
       try {
-        exec(scrpt, (error, stdout, stderr) => {
+        exec(script, (error, stdout, stderr) => {
           if (error instanceof Error) {
             console.error(error);
             //throw new Error(error);
@@ -164,7 +164,12 @@ module.exports = function (settings) {
           } else {
             // console.log("stdout:\n", stdout);
             // console.log("stderr:\n", stderr);
-            resolve(stdout + stderr);
+            let out = stdout + stderr;
+            if(script.match(/kill/gi) && String(out).toLowerCase().match(/incomplete response received from application/gi)) {
+              resolve('Goodbye 👋 (maybe reload)');
+            } else {
+              resolve(out);
+            }            
           }
         });            
       } catch (error) {
@@ -365,36 +370,36 @@ module.exports = function (settings) {
       return;
     }
 
-    const scrpt = `npm ${type} ${list}`;
-    const output = await execScript(scrpt);
+    const script = `npm ${type} ${list}`;
+    const output = await execScript(script);
     res.send(HTML_PRE + output)
   });
 
   // NPM fix
   router.get("/npm/fix", auth, async function (req, res) {
-    const scrpt = `npm audit fix`;
-    const output = await execScript(scrpt);
+    const script = `npm audit fix`;
+    const output = await execScript(script);
     res.send(HTML_PRE + output)
   });
 
   // NPM install package.json
   router.get("/npm/install", auth, async function (req, res) {
-    const scrpt = `npm install`;
-    const output = await execScript(scrpt);
+    const script = `npm install`;
+    const output = await execScript(script);
     res.send(HTML_PRE + output)
   });
 
   // NPM ls
   router.get("/npm/ls", auth, async function (req, res) {
-    const scrpt = `npm ls`;
-    const output = await execScript(scrpt);
+    const script = `npm ls`;
+    const output = await execScript(script);
     res.send(HTML_PRE + output)
   });
 
   // NPM audit
   router.get("/npm/audit", auth, async function (req, res) {
-    const scrpt = `npm audit`;
-    const output = await execScript(scrpt);
+    const script = `npm audit`;
+    const output = await execScript(script);
     res.send(HTML_PRE + output)
   });
 
