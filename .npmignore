@@ -3,7 +3,7 @@
 /node_modules_unix
 .git
 .idea
-local-example
+/local-example
 public
 example
 index-class.js
